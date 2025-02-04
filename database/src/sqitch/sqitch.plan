@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=roller_db
+%uri=https://github.com/AxiosDeminence/sao_roller
+
+appschema 2024-12-03T09:32:38Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.github.com> # Add schema for SAO-RPG roller objects
