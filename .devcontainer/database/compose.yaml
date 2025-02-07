@@ -1,0 +1,46 @@
+services:
+  dev-machine:
+    build:
+      context: .
+      dockerfile: development.Containerfile
+    command: sleep infinity
+    volumes:
+    - ../..:/workspace:rw,z,cached
+    - postgresql-socket:/var/run/postgresql:rw,z
+    environment:
+      SQITCH_USER_CONFIG: /run/secrets/sqitch_config
+    secrets:
+    - sqitch_config
+
+  db:
+    build:
+      context: .
+      dockerfile: database.Containerfile
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    volumes:
+    - postgres-data:/var/lib/postgresql/data:rw,z
+    - postgresql-socket:/var/run/postgresql:rw,z
+    - ../../database/configuration/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    - ../../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf
+    - ../../database:/usr/local/src/postgresql:ro,z
+    command:
+    - -c
+    - config_file=/etc/postgresql/postgresql.conf
+    - -c
+    - hba_file=/etc/postgresql/pg_hba.conf
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+    - db_password
+
+volumes:
+  postgres-data:
+  postgresql-socket:
+
+secrets:
+  sqitch_config:
+    file: ./sqitch.conf
+  db_password:
+    file: ./POSTGRES_PASSWORD
