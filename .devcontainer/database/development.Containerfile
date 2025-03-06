@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/base:debian-12
 
 RUN apt-get update && apt-get install --assume-yes \
-    pgformatter \
     sqitch \
     libdbd-pg-perl \
     postgresql-common \

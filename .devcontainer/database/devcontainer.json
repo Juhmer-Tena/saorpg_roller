@@ -5,12 +5,5 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "containerUser": "vscode",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-ossdata.vscode-postgresql"
-      ]
-    }
-  }
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
