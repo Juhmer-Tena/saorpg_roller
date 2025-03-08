@@ -1,2 +1,2 @@
-.devcontainer/database-container/sqitch.conf
-.devcontainer/PGPASS
+.devcontainer/common/POSTGRES_PASSWORD
+.devcontainer/database/sqitch.conf
