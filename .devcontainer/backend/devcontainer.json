@@ -5,5 +5,12 @@
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "containerUser": "vscode",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "none",
+      "installGradle": true,
+      "gradleVersion": "8.13"
+    }
+  }
 }

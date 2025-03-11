@@ -28,3 +28,27 @@ each component is well-tested even if automated tests are not set up in a contin
 pipeline and well-architected such that it can be maintained without too much expertise.
 
 Using a high availability (HA) Kubernetes cluster is not necessary for a project of this scale.
+
+## Using Devcontainers
+
+The devcontainers are currently intended to be used separately per project. Especially for the
+listed projects that have a database container, do NOT use them concurrently. This risks data
+corruption and if you do use them concurrently, you will need to delete the volumes.
+
+### Debugging (w/ Podman)
+
+Podman is a bit of a pain point with devcontainers primarily because of unresolved bugs in the
+devcontainer cli and slight differences between podman and docker capabilities (although both are
+OCI-compliant).
+
+* Buildkit failure when using features: Documented by devcontainer-cli (see [issue #863 in the
+    devcontainers/cli repository](https://github.com/devcontainers/cli/issues/863)).
+  * Workaround: Downgrade container extension to v0.354.0 which maps to the devcontainer-cli 0.58.0
+* Permission issues: Make sure that podman is not running in rootless mode. This could potentially
+    be alleviated if the `devcontainer.json` had the proper `userns` mapping settings but depending
+    on where you look it is different so it is just easier to run it in rootful mode.
+  * [Official devcontainer documentation](https://code.visualstudio.com/remote/advancedcontainers/docker-options)
+      uses `runArgs` to set the `userns` mapping.
+  * [Issue #7657 in the microsft/vscode-remote-release repository](https://github.com/microsoft/vscode-remote-release/issues/7657)
+      recommends setting the `remoteEnv` setting instead.
+

@@ -1,8 +1,6 @@
 services:
   dev-machine:
-    build:
-      context: .
-      dockerfile: development.Containerfile
+    image: mcr.microsoft.com/devcontainers/java:21-bookworm
     security_opt:
     - no-new-privileges:true
     command: sleep infinity
@@ -32,6 +30,7 @@ services:
 
 volumes:
   postgres-data:
+    external: true
   postgresql-socket:
 
 secrets:
