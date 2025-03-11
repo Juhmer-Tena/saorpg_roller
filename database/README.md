@@ -1,13 +1,19 @@
 # Database configuration for the SAO Roller v2
 
-The database configuration for the SAO Roller v2 including tests for creating the schema. Uses
+The database configuration for the SAO Roller v2 including tests for creating the schema and uses
 sqitch for migration-based schemas and pgtap to ensure that the schemas are created properly. The
-database in the PostgreSQL instance should be `saorpg`.
+database in the PostgreSQL instance should be in the `saorpg` database.
 
 ## Creating the Devcontainer
 
-The devcontainer should be able to be created without much problems. There are some files that must
-be filled out in the `.devcontainer` such as:
+### Volume Creation
+
+A volume called `postgres-data` should be created in whatever you use to manage containers (e.g.,
+podman or docker). This will be shared and used between multiple projects.
+
+### File Configuration
+
+There are some files that must be filled out in the `.devcontainer` for secrets:
 
 * `common/POSTGRES_PASSWORD`
 * `database/sqitch.conf`
@@ -24,3 +30,6 @@ following command should be executed:
 
 After putting in the password generated in `.devcontainer/database/POSTGRES_PASSWORD` when prompted,
 the tests will execute and display the results.
+
+Alternatively, the unit tests can be run on a dedicated staging (or production if there is no
+staging) PostgreSQL system with the schema deployed.
