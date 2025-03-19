@@ -1,9 +1,9 @@
 {
-  "name": "postrgresql-dev",
-  "dockerComposeFile": "compose.yaml",
-  "service": "dev-machine",
-  "workspaceFolder": "/workspace",
-  "shutdownAction": "stopCompose",
-  "containerUser": "vscode",
+  "name": "database",
+  "dockerComposeFile": "../compose.yaml",
+  "service": "db",
+  "workspaceFolder": "/usr/local/src/postgresql",
+  "shutdownAction": "none",
+  "containerUser": "postgres",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }

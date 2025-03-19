@@ -3,9 +3,11 @@ services:
     build:
       context: .
       dockerfile: development.Containerfile
+    security_opt:
+    - no-new-privileges:true
     command: sleep infinity
     volumes:
-    - ../..:/workspace:rw,z,cached
+    - ..:/workspace:rw,z,cached
     networks:
       - internal
     environment:
@@ -22,10 +24,10 @@ services:
     - no-new-privileges:true
     volumes:
     - postgres-data:/var/lib/postgresql/data:rw,z
-    - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
-    - ../../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
-    - ../../database:/usr/local/src/postgresql:ro,Z
-    - ../../database/src/shell:/docker-entrypoint-initdb.d:ro,Z
+    - ./database/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
+    - ../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
+    - ../database:/usr/local/src/postgresql:ro,Z
+    - ../database/src/shell:/docker-entrypoint-initdb.d:ro,Z
     ports:
     - 5432
     networks:
@@ -50,8 +52,6 @@ networks:
 
 secrets:
   sqitch_config:
-    file: ./sqitch.conf
+    file: database/sqitch.conf
   postgres_admin_password:
-    file: ../database/POSTGRES_PASSWORD
-  saorpg_user_password:
-    file: ../common/SAORPG_PASSWORD
+    file: database/POSTGRES_PASSWORD

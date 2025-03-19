@@ -31,9 +31,8 @@ Using a high availability (HA) Kubernetes cluster is not necessary for a project
 
 ## Using Devcontainers
 
-The devcontainers are currently intended to be used separately per project. Especially for the
-listed projects that have a database container, do NOT use them concurrently. This risks data
-corruption and if you do use them concurrently, you will need to delete the volumes.
+The devcontainers are created using the compose specification and include a container for the
+developer's experience and containers for each application in the project.
 
 ### Debugging (w/ Podman)
 
