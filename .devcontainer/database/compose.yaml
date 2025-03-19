@@ -6,7 +6,8 @@ services:
     command: sleep infinity
     volumes:
     - ../..:/workspace:rw,z,cached
-    - postgresql-socket:/var/run/postgresql:rw,z
+    networks:
+      - internal
     environment:
       SQITCH_USER_CONFIG: /run/secrets/sqitch_config
     secrets:
@@ -21,26 +22,36 @@ services:
     - no-new-privileges:true
     volumes:
     - postgres-data:/var/lib/postgresql/data:rw,z
-    - postgresql-socket:/var/run/postgresql:rw,z
-    - ../../database/configuration/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
+    - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
     - ../../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
-    - ../../database:/usr/local/src/postgresql:ro,z
+    - ../../database:/usr/local/src/postgresql:ro,Z
+    - ../../database/src/shell:/docker-entrypoint-initdb.d:ro,Z
+    ports:
+    - 5432
+    networks:
+    - internal
     command:
     - -c
     - config_file=/etc/postgresql/postgresql.conf
     - -c
     - hba_file=/etc/postgresql/pg_hba.conf
     environment:
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_admin_password
     secrets:
-    - db_password
+    - postgres_admin_password
 
 volumes:
   postgres-data:
-  postgresql-socket:
+    external: true
+
+networks:
+  internal:
+    internal: true
 
 secrets:
   sqitch_config:
     file: ./sqitch.conf
-  db_password:
-    file: ../common/POSTGRES_PASSWORD
+  postgres_admin_password:
+    file: ../database/POSTGRES_PASSWORD
+  saorpg_user_password:
+    file: ../common/SAORPG_PASSWORD

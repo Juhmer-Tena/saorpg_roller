@@ -15,7 +15,7 @@ podman or docker). This will be shared and used between multiple projects.
 
 There are some files that must be filled out in the `.devcontainer` for secrets:
 
-* `common/POSTGRES_PASSWORD`
+* `database/POSTGRES_PASSWORD` (unused due to peer authentication only being permitted)
 * `database/sqitch.conf`
 
 There are template files (filetype suffix `.template`) with information that should be filled out
