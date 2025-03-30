@@ -9,6 +9,7 @@ services:
     volumes:
     - ..:/workspace:rw,z,cached
     networks:
+      - external
       - internal
     environment:
       SQITCH_USER_CONFIG: /run/secrets/sqitch_config
@@ -47,6 +48,8 @@ volumes:
     external: true
 
 networks:
+  # Internal network is added to secure database while using trust authentication
+  external:
   internal:
     internal: true
 
