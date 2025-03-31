@@ -8,9 +8,10 @@
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "none",
+      "version": "21",
       "installGradle": true,
       "gradleVersion": "8.12"
-    }
+    },
+    "ghcr.io/devcontainers/features/node": {}
   }
 }

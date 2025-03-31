@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/java:21-bookworm
+FROM mcr.microsoft.com/devcontainers/base:debian-12
 
 RUN apt-get update && apt-get install --assume-yes \
     sqitch \
