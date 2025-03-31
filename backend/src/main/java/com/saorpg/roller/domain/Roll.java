@@ -37,6 +37,8 @@ public class Roll {
   })
   private DiceResult diceResult;
 
+  public Roll() {}
+
   public Roll(RollMetadata metadata, DiceResult diceResult) {
     this.metadata = metadata;
     this.diceResult = diceResult;

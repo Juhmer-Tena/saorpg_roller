@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import com.saorpg.roller.dao.RollRepository;
@@ -42,11 +44,10 @@ public class RollerService {
     return rollRepository.findById(id).orElseThrow();
   }
 
-  public List<Roll> getRollsByCharacter(String character) {
-    return rollRepository.findByMetadataCharacter(character);
-  }
-
-  public List<Roll> getRollsByPost(String post) {
-    return rollRepository.findByMetadataPost(post);
+  public List<Roll> getRollsMatchingMetadata(RollMetadata metadata) {
+    Roll dummyRoll = new Roll(metadata, null);
+    ExampleMatcher matcher = ExampleMatcher.matchingAny()
+        .withIgnoreNullValues();
+    return rollRepository.findAll(Example.of(dummyRoll, matcher));
   }
 }
