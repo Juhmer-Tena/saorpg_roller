@@ -61,4 +61,10 @@ public class RollerRESTController {
     RollMetadata dummyMetadata = new RollMetadata(null, post, null, character);
     return this.rollerService.getRollsMatchingMetadata(dummyMetadata);
   }
+
+  // God I wish that range headers were more properly supported by Spring
+  @GetMapping(value = "/roll/last50", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Roll> getLast50Rolls() {
+    return this.rollerService.getLast50Rolls();
+  }
 }

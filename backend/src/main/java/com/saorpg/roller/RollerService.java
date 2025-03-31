@@ -38,17 +38,21 @@ public class RollerService {
     }
     List<DiceResult> diceResults = this.diceRoller.getObject(numberOfRolls);
     List<Roll> rolls = diceResults.stream().map(result -> new Roll(metadata, result)).toList();
-    return rollRepository.saveAll(rolls);
+    return this.rollRepository.saveAll(rolls);
   }
 
   public Optional<Roll> getRollById(int id) {
-    return rollRepository.findById(id);
+    return this.rollRepository.findById(id);
   }
 
   public List<Roll> getRollsMatchingMetadata(RollMetadata metadata) {
     Roll dummyRoll = new Roll(metadata, null);
     ExampleMatcher matcher = ExampleMatcher.matchingAny()
         .withIgnoreNullValues();
-    return rollRepository.findAll(Example.of(dummyRoll, matcher));
+    return this.rollRepository.findAll(Example.of(dummyRoll, matcher));
+  }
+
+  public List<Roll> getLast50Rolls() {
+    return this.rollRepository.findFirst50ByOrderByIdDesc();
   }
 }
