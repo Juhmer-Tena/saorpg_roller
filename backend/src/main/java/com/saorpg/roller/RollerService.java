@@ -1,6 +1,7 @@
 package com.saorpg.roller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,8 @@ public class RollerService {
     return rollRepository.saveAll(rolls);
   }
 
-  public Roll getRollById(int id) {
-    return rollRepository.findById(id).orElseThrow();
+  public Optional<Roll> getRollById(int id) {
+    return rollRepository.findById(id);
   }
 
   public List<Roll> getRollsMatchingMetadata(RollMetadata metadata) {
