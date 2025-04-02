@@ -1,36 +1,31 @@
 {
-  "name": "vite-tailwind-starter",
-  "description": "NoJS Vite + Tailwind CSS Starter",
-  "version": "0.0.0",
-  "keywords": [
-    "template",
-    "scaffold",
-    "tailwind",
-    "tailwindcss",
-    "tailwind-css",
-    "vite",
-    "vitejs",
-    "vite-template",
-    "vitejs-template",
-    "vite-tailwind"
-  ],
-  "type": "module",
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "format": "prettier --write './src/**/*.{html,js,jsx,ts,tsx}'"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.16",
-    "daisyui": "^5.0.9",
-    "postcss": "^8.5.3",
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.0.16",
-    "vite": "^6.2.3"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "cssnano": "^7.0.6"
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "daisyui": "^5.0.11",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

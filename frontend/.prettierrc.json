@@ -2,5 +2,7 @@
   "tailwindConfig": "./tailwind.config.mjs",
   "plugins": [
     "prettier-plugin-tailwindcss"
-  ]
+  ],
+  "tabWidth": 2,
+  "useTabs": false
 }

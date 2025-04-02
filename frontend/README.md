@@ -1,26 +1,36 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f4e57968-eb20-4de8-91c4-001474804566/deploy-status)](https://app.netlify.com/sites/frolicking-kitten-1d5828/deploys)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Vite TailwindCSS NoJS Starter
-====
-Scaffold a new project with Vite and Tailwind CSS preconfigured with ease.
+## Getting Started
 
-## Motivation
-
-Most existing Vite + Tailwind starters are aimed to work with a JS framework, e.g Vue or React.
-An important difference of this starter template is that **the build stage does not involve any JavaScript, just pure HTML/CSS compilation**.
-
-## When to use
-
-1. When you need to develop a pure HTML/CSS prototype.
-2. When you import a standalone version of a JS framework right from HTML.
-
-## How to use
+First, run the development server:
 
 ```bash
-npx degit kometolabs/vite-tailwind-nojs-starter my-tailwind-app
-cd my-tailwind-app
-pnpm i || yarn || npm i
-pnpm run dev || yarn dev || npm run dev
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-**Happy coding!**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

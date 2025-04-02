@@ -1,3 +1,6 @@
 # Prevent devcontainer secrets from being leaked
 .devcontainer/**/POSTGRES_PASSWORD
 .devcontainer/**/sqitch.conf
+
+.pnpm-store
+node_modules
