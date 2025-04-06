@@ -3,76 +3,116 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div id="custom_img_bg" className="bg-cover bg-center">
-      <div className="container pt-5 w-250 m-auto bg-base-100 p-5 max-md:w-100">
-        <div className="w-180 m-auto max-md:w-90 min-lg:w-200">
-        <div className="grid grid-cols-1 min-md:grid-cols-2 gap-5">
+      <div className="bg-base-100 container m-auto w-250 p-5 pt-5 max-md:w-100">
+        <div className="m-auto w-180 max-md:w-90 min-lg:w-200">
+          <div className="grid grid-cols-1 gap-5 min-md:grid-cols-2">
             <div id="custom_img_header" className="bg-cover bg-center">
-            <div className="justify-center flex flex-col">
-                <div className="w-90 m-auto min-md:w-80 min-md:flex-1 min-md:pt-20">
-                    <div className="card bg-primary card-sm shadow-sm">
-                        <div className="card-body">
-                            <button className="text-white card-title text-2xl btn bg-primary border-primary justify-start">SAO-RPG Dice Roller</button>
-                        </div>
+              <div className="flex flex-col justify-center">
+                <div className="m-auto w-90 min-md:w-80 min-md:flex-1 min-md:pt-20">
+                  <div className="card bg-primary card-sm shadow-sm">
+                    <div className="card-body">
+                      <button className="card-title btn bg-primary border-primary justify-start text-2xl text-white">
+                        SAO-RPG Dice Roller
+                      </button>
                     </div>
-                    <div className="card-xs">
-                        <div className="card-body p-0">
-                            <p className="bg-base-100 p-3">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis nisi posuere, egestas lorem nec, malesuada metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                            </p>
-                            <div className="flex flex-row gap-1 m-auto bg-base-100/80 border-base-100/30 border-1 rounded-lg">
-                                <div>
-                                    <div className="tooltip grow tooltip-top" style={{ "--tt-off": "calc(100%)" }} >
-                                        <label htmlFor="modal_settings" className="btn btn-xs btn-ghost justify-start">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--color-base-content)" className="bi bi-gear-fill" viewBox="0 0 16 16">
-                                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                                              </svg>
-                                            </label>
-                                        <div className="tooltip-content text-xs">
-                                            Settings
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div className="tooltip grow tooltip-top" style={{ "--tt-off": "calc(100%)" }}>
-                                        <a href="https://discord.gg/p2zsGGJ" target="_blank">
-                                        <label className="btn btn-xs btn-ghost justify-start">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--color-base-content)" className="bi bi-discord" viewBox="0 0 16 16">
-                                                <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
-                                              </svg>
-                                            </label>
-                                        </a>
-                                        <div className="tooltip-content text-xs">
-                                            Join our Discord!
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="tooltip grow tooltip-top" style={{ "--tt-off": "calc(100%)" }} >
-                                        <a href="https://www.sao-rpg.com/" target="_blank">
-                                        <label className="btn btn-xs btn-ghost justify-start">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--color-base-content)" className="bi bi-pen-fill" viewBox="0 0 16 16">
-                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
-                                              </svg>
-                                            </label>
-                                        </a>
-                                        <div className="tooltip-content text-xs">
-                                            Return to SAO-RPG
-                                        </div>
-                                    </div>
-                                </div>
+                  </div>
+                  <div className="card-xs">
+                    <div className="card-body p-0">
+                      <p className="bg-base-100 p-3">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Nunc quis nisi posuere, egestas lorem nec, malesuada
+                        metus. Orci varius natoque penatibus et magnis dis
+                        parturient montes, nascetur ridiculus mus.
+                      </p>
+                      <div className="bg-base-100/80 border-base-100/30 m-auto flex flex-row gap-1 rounded-lg border-1">
+                        <div>
+                          <div
+                            className="tooltip tooltip-top grow"
+                            style={{ "--tt-off": "calc(100%)" }}
+                          >
+                            <label
+                              htmlFor="modal_settings"
+                              className="btn btn-xs btn-ghost justify-start"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="var(--color-base-content)"
+                                className="bi bi-gear-fill"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                              </svg>
+                            </label>
+                            <div className="tooltip-content text-xs">
+                              Settings
                             </div>
-                            <div className="max-md:h-1.5"></div>
+                          </div>
                         </div>
+                        <div>
+                          <div
+                            className="tooltip tooltip-top grow"
+                            style={{ "--tt-off": "calc(100%)" }}
+                          >
+                            <a
+                              href="https://discord.gg/p2zsGGJ"
+                              target="_blank"
+                            >
+                              <label className="btn btn-xs btn-ghost justify-start">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="var(--color-base-content)"
+                                  className="bi bi-discord"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
+                                </svg>
+                              </label>
+                            </a>
+                            <div className="tooltip-content text-xs">
+                              Join our Discord!
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className="tooltip tooltip-top grow"
+                            style={{ "--tt-off": "calc(100%)" }}
+                          >
+                            <a href="https://www.sao-rpg.com/" target="_blank">
+                              <label className="btn btn-xs btn-ghost justify-start">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="var(--color-base-content)"
+                                  className="bi bi-pen-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                                </svg>
+                              </label>
+                            </a>
+                            <div className="tooltip-content text-xs">
+                              Return to SAO-RPG
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="max-md:h-1.5"></div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
 
             <div className="w-90">
               <div className="tabs tabs-lift">
                 <label className="tab text-primary">
-                  <input type="radio" name="sao_roller" defaultChecked={true}/>
+                  <input type="radio" name="sao_roller" defaultChecked={true} />
                   <div className="mr-1.5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -82,12 +122,8 @@ export default function Home() {
                       className="bi bi-dice-3 bi-tab"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="M13 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3z"
-                      />
-                      <path
-                        d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
-                      />
+                      <path d="M13 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3z" />
+                      <path d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                     </svg>
                   </div>
                   <p className="font-semibold">Dice Roller</p>
@@ -132,16 +168,12 @@ export default function Home() {
                     </button>
                   </div>
 
-                  <div
-                    className="bg-base-100 border-base-100 collapse-arrow collapse"
-                  >
+                  <div className="bg-base-100 border-base-100 collapse-arrow collapse">
                     <input type="checkbox" />
-                    <div
-                      className="collapse-title text-base-content/35 text-ssm/8 pl-2 align-middle font-semibold"
-                    >
+                    <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 align-middle font-semibold">
                       Advanced Roll Options
                     </div>
-                    <div className="collapse-content text-sm pl-2">
+                    <div className="collapse-content pl-2 text-sm">
                       <div className="flex flex-col gap-1">
                         <div className="flex flex-row gap-0 p-0">
                           <input
@@ -225,33 +257,41 @@ export default function Home() {
                       className="bi bi-search bi-tab"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
-                      />
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
                   </div>
                   <p className="font-semibold">Roll Lookup</p>
                 </label>
-                  <div className="tab-content bg-base-100 border-base-300 p-6">
-                        <div className="min-md:h-1"></div>
-                        <div className="list gap-1.5 p-1">
-                            <fieldset className="fieldset">
-                                <legend className="fieldset-legend">Search by Roll ID#</legend>
-                                <input id="field_lookup_id" type="text" className="input" placeholder="Roll ID#" />
-                                <div>
-                                    <button id="btn_lookup_id" className="btn text-white bg-primary border-primary btn-sm">Search by ID!</button>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div className="p-0">
+                <div className="tab-content bg-base-100 border-base-300 p-6">
+                  <div className="min-md:h-1"></div>
+                  <div className="list gap-1.5 p-1">
+                    <fieldset className="fieldset">
+                      <legend className="fieldset-legend">
+                        Search by Roll ID#
+                      </legend>
+                      <input
+                        id="field_lookup_id"
+                        type="text"
+                        className="input"
+                        placeholder="Roll ID#"
+                      />
+                      <div>
+                        <button
+                          id="btn_lookup_id"
+                          className="btn bg-primary border-primary btn-sm text-white"
+                        >
+                          Search by ID!
+                        </button>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div className="p-0">
                     <div className="bg-base-100 collapse-arrow collapse">
                       <input type="checkbox" />
-                      <div
-                        className="collapse-title font-semibold text-base-content/35 text-ssm/8 pl-2"
-                      >
+                      <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
                         Search by Name.
                       </div>
-                      <div className="collapse-content text-sm pl-2">
+                      <div className="collapse-content pl-2 text-sm">
                         <fieldset className="fieldset">
                           <input
                             id="field_lookup_name"
@@ -272,12 +312,10 @@ export default function Home() {
                     </div>
                     <div className="bg-base-100 collapse-arrow collapse">
                       <input type="checkbox" />
-                      <div
-                        className="collapse-title font-semibold text-base-content/35 text-ssm/8 pl-2"
-                      >
+                      <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
                         Search by Post Link.
                       </div>
-                      <div className="collapse-content text-sm pl-2">
+                      <div className="collapse-content pl-2 text-sm">
                         <fieldset className="fieldset">
                           <input
                             id="field_lookup_url"
@@ -295,9 +333,9 @@ export default function Home() {
                           </div>
                         </fieldset>
                       </div>
-                      </div>
                     </div>
-              </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -307,14 +345,16 @@ export default function Home() {
         <div>
           <div className="flex flex-row">
             <div className="w-250">
-                <div className="flex flex-col">
-                    <div className="flex flex-row pb-3">
-                        <div className="grow"></div>
-                        <div id="btn-copy-multiroll"></div>
-                        <div className="p-3"></div>
-                        <button className="btn btn-ghost btn-sm">Copy Multiple Rolls</button>
-                    </div>
+              <div className="flex flex-col">
+                <div className="flex flex-row pb-3">
+                  <div className="grow"></div>
+                  <div id="btn-copy-multiroll"></div>
+                  <div className="p-3"></div>
+                  <button className="btn btn-ghost btn-sm">
+                    Copy Multiple Rolls
+                  </button>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -355,9 +395,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -404,9 +442,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -453,9 +489,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -502,9 +536,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -551,9 +583,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -600,9 +630,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -649,9 +677,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -698,9 +724,7 @@ export default function Home() {
                           className="bi bi-chat-square-fill"
                           viewBox="0 0 16 16"
                         >
-                          <path
-                            d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"
-                          />
+                          <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         </svg>
                       </button>
                     </div>
@@ -799,13 +823,13 @@ export default function Home() {
       <input type="checkbox" id="modal_settings" className="modal-toggle" />
       <div className="modal" role="dialog">
         <div className="modal-box no-scrollbar">
-          <h3 className="text-primary pb-3 pl-3 text-xl font-bold">Settings.</h3>
+          <h3 className="text-primary pb-3 pl-3 text-xl font-bold">
+            Settings.
+          </h3>
           <div className="flex flex-col gap-5">
             <div>
               <div className="flex flex-row">
-                <p
-                  className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold"
-                >
+                <p className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold">
                   Change Site Theme
                 </p>
                 <div className="dropdown">
@@ -819,9 +843,7 @@ export default function Home() {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 2048 2048"
                       >
-                        <path
-                          d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"
-                        ></path>
+                        <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
                       </svg>
                     </div>
                   </div>
@@ -888,9 +910,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <div>
-                  <p
-                    className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold"
-                  >
+                  <p className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold">
                     Change Site Banner
                   </p>
                   <div className="flex flex-row">
@@ -903,19 +923,21 @@ export default function Home() {
                     </fieldset>
                     <div className="grow"></div>
                     <div className="pt-3">
-                      <button className="btn btn-primary text-white">Save</button>
+                      <button className="btn btn-primary text-white">
+                        Save
+                      </button>
                     </div>
                     <div className="p-1"></div>
                     <div className="pt-3">
-                      <button className="btn btn-error text-white">Reset</button>
+                      <button className="btn btn-error text-white">
+                        Reset
+                      </button>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <p
-                    className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold"
-                  >
+                  <p className="grow justify-start pt-3.5 pl-3 align-middle text-sm font-semibold">
                     Change Site Background
                   </p>
                   <div className="flex flex-row">
@@ -928,11 +950,15 @@ export default function Home() {
                     </fieldset>
                     <div className="grow"></div>
                     <div className="pt-3">
-                      <button className="btn btn-primary text-white">Save</button>
+                      <button className="btn btn-primary text-white">
+                        Save
+                      </button>
                     </div>
                     <div className="p-1"></div>
                     <div className="pt-3">
-                      <button className="btn btn-error text-white">Reset</button>
+                      <button className="btn btn-error text-white">
+                        Reset
+                      </button>
                     </div>
                   </div>
                 </div>
