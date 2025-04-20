@@ -43,6 +43,21 @@ services:
     secrets:
     - postgres_admin_password
 
+  proxy:
+    image: nginxinc/nginx-unprivileged
+    security_opt:
+    - no-new-privileges:true
+    environment:
+      API_SERVER_CONTAINER: dev-machine
+      FRONTEND_SERVER_CONTAINER: dev-machine
+    ports:
+      - 8080:8080
+    volumes:
+    - ../infrastructure/src/nginx/templates:/etc/nginx/templates:ro,Z
+    networks:
+      - external
+      - internal
+
 volumes:
   postgres-data:
     external: true
