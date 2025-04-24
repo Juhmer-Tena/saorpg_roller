@@ -48,7 +48,6 @@ export default function Home() {
                         <div>
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <label
                               htmlFor="modal_settings"
@@ -73,7 +72,6 @@ export default function Home() {
                         <div>
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <a
                               href="https://discord.gg/p2zsGGJ"
@@ -100,7 +98,6 @@ export default function Home() {
                         <div>
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <a href="https://www.sao-rpg.com/" target="_blank">
                               <label className="btn btn-xs btn-ghost justify-start">
@@ -203,7 +200,6 @@ export default function Home() {
                           />
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <p className="m-1.5 text-xs">Do Multi-Roll.</p>
                             <div className="tooltip-content text-xs">
@@ -228,7 +224,6 @@ export default function Home() {
                           />
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <p className="m-1.5 text-xs">Do AoE Roll.</p>
                             <div className="tooltip-content text-xs">
@@ -244,7 +239,6 @@ export default function Home() {
                           />
                           <div
                             className="tooltip tooltip-top grow"
-                            style={{ "--tt-off": "calc(100%)" }}
                           >
                             <p className="m-1.5 text-xs">Do Multi-MD Roll.</p>
                             <div className="tooltip-content text-xs">
