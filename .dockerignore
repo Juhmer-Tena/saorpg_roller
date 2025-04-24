@@ -1,0 +1,7 @@
+frontend/.next
+frontend/.github
+frontend/node_modules
+
+backend/.gradle
+backend/bin
+backend/build
