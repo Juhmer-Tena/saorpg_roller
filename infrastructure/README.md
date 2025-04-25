@@ -4,7 +4,7 @@ Infrastructure is used as a loose term here.
 
 ## Deploying the application
 
-1. Change your working directory to `infrastructure/src/docker`
+1. Change your working directory to the root directory of the repository
 2. Run `docker compose up -d` (or if you're using podman do `podman compose up -d`)
 
 List of containers that should now be deployed:
