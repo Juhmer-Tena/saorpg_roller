@@ -1,13 +1,12 @@
 services:
   dev-machine:
     build:
-      context: .
-      dockerfile: development.Containerfile
+      dockerfile: ./.devcontainer/development.Containerfile
     security_opt:
     - no-new-privileges:true
     command: sleep infinity
     volumes:
-    - ..:/workspace:rw,z,cached
+    - .:/workspace:rw,z,cached
     networks:
       - external
       - internal
@@ -19,17 +18,16 @@ services:
 
   db:
     build:
-      context: .
-      dockerfile: database.Containerfile
+      dockerfile: ./.devcontainer/database.Containerfile
     restart: unless-stopped
     security_opt:
     - no-new-privileges:true
     volumes:
     - postgres-data:/var/lib/postgresql/data:rw,z
-    - ./database/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
-    - ../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
-    - ../database:/usr/local/src/postgresql:ro,Z
-    - ../database/src/shell:/docker-entrypoint-initdb.d:ro,Z
+    - ./.devcontainer/database/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro,Z
+    - ./database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
+    - ./database:/usr/local/src/postgresql:ro,Z
+    - ./database/src/shell:/docker-entrypoint-initdb.d:ro,Z
     networks:
     - internal
     command:
@@ -38,9 +36,7 @@ services:
     - -c
     - hba_file=/etc/postgresql/pg_hba.conf
     environment:
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_admin_password
-    secrets:
-    - postgres_admin_password
+      POSTGRES_HOST_AUTH_METHOD: trust
 
   proxy:
     image: nginxinc/nginx-unprivileged
@@ -52,7 +48,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-    - ../infrastructure/src/nginx/templates:/etc/nginx/templates:ro,Z
+    - ./infrastructure/src/nginx/templates:/etc/nginx/templates:ro,Z
     networks:
       - external
       - internal
@@ -69,6 +65,4 @@ networks:
 
 secrets:
   sqitch_config:
-    file: database/sqitch.conf
-  postgres_admin_password:
-    file: database/POSTGRES_PASSWORD
+    file: ./.devcontainer/database/sqitch.conf

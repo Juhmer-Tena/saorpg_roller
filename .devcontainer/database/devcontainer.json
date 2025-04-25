@@ -1,6 +1,6 @@
 {
   "name": "database",
-  "dockerComposeFile": "../compose.yaml",
+  "dockerComposeFile": "../../compose.dev.yaml",
   "service": "db",
   "workspaceFolder": "/usr/local/src/postgresql",
   "shutdownAction": "none",

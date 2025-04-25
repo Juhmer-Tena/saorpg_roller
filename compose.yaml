@@ -1,8 +1,7 @@
 services:
   frontend:
     build:
-      context: ../../..
-      dockerfile: infrastructure/src/docker/frontend.Containerfile
+      dockerfile: ./infrastructure/src/docker/frontend.Containerfile
     container_name: frontend
     security_opt:
     - no-new-privileges:true
@@ -11,8 +10,7 @@ services:
 
   backend:
     build:
-      context: ../../..
-      dockerfile: infrastructure/src/docker/backend.Containerfile
+      dockerfile: ./infrastructure/src/docker/backend.Containerfile
     container_name: backend
     security_opt:
     - no-new-privileges:true
@@ -36,10 +34,10 @@ services:
     security_opt:
     - no-new-privileges:true
     volumes:
-    - ../../../postgresql-live-data:/var/lib/postgresql/data:rw
-    - ../../../database/configuration/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
-    - ../../../database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro
-    - ../../../database/src/shell:/docker-entrypoint-initdb.d:ro
+    - ./postgresql-live-data:/var/lib/postgresql/data:rw
+    - ./database/configuration/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+    - ./database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    - ./database/src/shell:/docker-entrypoint-initdb.d:ro
     networks:
     - internal
     command:
@@ -50,8 +48,7 @@ services:
 
   sqitch:
     build:
-      context: ../../..
-      dockerfile: infrastructure/src/docker/sqitch.Containerfile
+      dockerfile: ./infrastructure/src/docker/sqitch.Containerfile
     # Needed because links is not supported by podman
     container_name: sqitch
     security_opt:
@@ -74,7 +71,7 @@ services:
     ports:
     - 8080:8080
     volumes:
-    - ../nginx/templates:/etc/nginx/templates:ro,Z
+    - ./infrastructure/src/nginx/templates:/etc/nginx/templates:ro,Z
     networks:
     - external
     - internal

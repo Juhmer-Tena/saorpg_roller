@@ -1,6 +1,6 @@
 {
   "name": "development",
-  "dockerComposeFile": "../compose.yaml",
+  "dockerComposeFile": "../../compose.dev.yaml",
   "service": "dev-machine",
   "workspaceFolder": "/workspace",
   "shutdownAction": "none",
