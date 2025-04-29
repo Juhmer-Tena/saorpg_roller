@@ -49,6 +49,8 @@ List of containers that should now be deployed:
 
 You should now be able to access the application by visiting <http://localhost:8080>.
 
+To stop the application, you can run `docker compose -f <filename for use case> down`.
+
 ## Using Devcontainers
 
 The devcontainers are created using the compose specification and include a container for the
