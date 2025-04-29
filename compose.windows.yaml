@@ -37,7 +37,7 @@ services:
     security_opt:
     - no-new-privileges:true
     volumes:
-    - /var/lib/postgresql:/var/lib/postgresql/data:rw
+    - postgres-data:/var/lib/postgresql/data:rw
     - ./database/configuration/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
     - ./database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro
     - ./database/src/shell:/docker-entrypoint-initdb.d:ro
@@ -78,6 +78,9 @@ services:
     networks:
     - external
     - internal
+
+volumes:
+  postgres-data:
 
 networks:
   # Internal network is added to secure database while using trust authentication

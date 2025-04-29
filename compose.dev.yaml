@@ -1,3 +1,5 @@
+name: devcontainer
+
 services:
   dev-machine:
     build:
