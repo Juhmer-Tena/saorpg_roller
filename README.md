@@ -29,6 +29,26 @@ pipeline and well-architected such that it can be maintained without too much ex
 
 Using a high availability (HA) Kubernetes cluster is not necessary for a project of this scale.
 
+## Deploying the application
+
+Run `docker compose -f <filename for use case> up -d` (or if you're using podman do
+`podman compose up -d`). The following use cases are provided:
+
+* `compose.dev.yaml` use for developing the applications and services
+* `compose.windows.yaml` used for a "production-like" deployment but on Windows (needed due to file
+    permission mapping issues with containerization technologies)
+* `compose.yaml` used for production deployment on Linux
+
+List of containers that should now be deployed:
+
+* database
+* backend
+* proxy
+* frontend
+* sqitch is not deployed actively and is just used to initialize the database
+
+You should now be able to access the application by visiting <http://localhost:8080>.
+
 ## Using Devcontainers
 
 The devcontainers are created using the compose specification and include a container for the
