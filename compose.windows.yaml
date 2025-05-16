@@ -7,6 +7,8 @@ services:
     container_name: frontend
     security_opt:
     - no-new-privileges:true
+    environment:
+      API_SERVER_CONTAINER: backend
     networks:
     - internal
 

@@ -1,25 +1,12 @@
-"use client";
-
 import RollTable from "@/components/RollTable";
-import { retrieveLast50Rolls, Roll } from "@/lib/roll";
-import { useEffect, useState } from "react";
+import { getQueryClient } from "@/lib/get-query-client";
+import { rollOptions } from "@/lib/roll";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default function Home() {
-  const [tableState, setTableState] = useState<null | Array<Roll>>(null);
+  const queryClient = getQueryClient();
 
-  useEffect(() => {
-    let abort = false;
-    setTableState(null);
-    retrieveLast50Rolls().then(rolls => {
-      if (!abort) {
-        setTableState(rolls);
-      }
-    });
-
-    return () => {
-      abort = true;
-    }
-  }, []);
+  void queryClient.prefetchQuery(rollOptions({ type: "recent" }));
 
   return (
     <div id="custom_img_bg" className="bg-cover bg-center">
@@ -375,7 +362,9 @@ export default function Home() {
 
         <div className="flex flex-col justify-center">
           <div className="overflow-x-auto">
-            {tableState == null ? <p>Loading...</p> : <RollTable rolls={tableState} />}
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <RollTable />
+            </HydrationBoundary>
           </div>
           <div className="divider"></div>
 
@@ -383,6 +372,7 @@ export default function Home() {
             <div>
               <div className="flex flex-row">
                 <div className="grow"></div>
+                {/* <button className="btn btn-ghost btn-sm" onClick={loadLast50Rolls}> */}
                 <button className="btn btn-ghost btn-sm">
                   View last 100 Rolls
                 </button>

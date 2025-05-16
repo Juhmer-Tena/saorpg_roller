@@ -13,6 +13,7 @@ services:
       - external
       - internal
     environment:
+      API_SERVER_CONTAINER: dev-machine
       SQITCH_USER_CONFIG: /run/secrets/sqitch_config
       DATABASE_SERVICE_NAME: db
     secrets:

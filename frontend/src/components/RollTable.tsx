@@ -1,4 +1,9 @@
-import { Roll } from "@/lib/roll";
+"use client";
+
+import { Roll, rollOptions } from "@/lib/roll";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRollContext } from "./RollContext";
+import { LocalizedTimestamp } from "./LocalizedTimestamp";
 
 function RollTableHeader() {
   return <tr>
@@ -41,7 +46,9 @@ function RollTableRow({ roll }: { roll: Roll }) {
         </button>
       </td>
       <td>{roll.purpose}</td>
-      <td>{new Date(roll.timestamp).toLocaleString()}</td>
+      <td>
+        <LocalizedTimestamp timestamp={new Date(roll.timestamp)} />
+      </td>
       <td className="m-0 p-0">
         <button className="btn btn-xs btn-ghost">
           <svg
@@ -63,14 +70,21 @@ function RollTableRow({ roll }: { roll: Roll }) {
   );
 }
 
-export default function RollTable({ rolls }: { rolls: Array<Roll> }) {
+export default function RollTable() {
+  const { params: fetchParams } = useRollContext();
+  const { data, status } = useSuspenseQuery(rollOptions(fetchParams));
+
+  if (status === "error") {
+    return <p style={{ color: "red" }}>Error loading Rolls!</p>
+  }
+
   return (
     <table className="table-pin-rows table-pin-cols table table-auto">
       <thead>
         <RollTableHeader />
       </thead>
       <tbody>
-        {rolls.map((roll) => <RollTableRow key={roll.id} roll={roll} />)}
+        {data.map((roll) => <RollTableRow key={roll.id} roll={roll} />)}
       </tbody>
 
       <tfoot>
