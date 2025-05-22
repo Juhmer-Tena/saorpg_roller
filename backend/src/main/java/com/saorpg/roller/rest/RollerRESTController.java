@@ -1,7 +1,12 @@
 package com.saorpg.roller.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import com.google.common.base.Strings;
+import com.google.common.net.InternetDomainName;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +30,8 @@ public class RollerRESTController {
   @Value("${com.saorpg.roller.versionRef}")
   private String VERSION;
 
+  private final String SAORPG_HOSTNAME = "sao-rpg.com";
+
   private RollerService rollerService;
 
   @Autowired
@@ -34,8 +41,18 @@ public class RollerRESTController {
 
   @PostMapping(value = "/roll", produces = MediaType.APPLICATION_JSON_VALUE)
   public Roll roll(@RequestBody RollRequest request) {
-    if (request.postLink() == null || request.purpose() == null || request.character() == null) {
-      throw new IllegalArgumentException("Post, purpose, and character must not be null");
+    try {
+      if (Strings.isNullOrEmpty(request.postLink()) || Strings.isNullOrEmpty(request.purpose()) || Strings.isNullOrEmpty(request.character())) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Post, purpose, and character must not be null and/or empty");
+      }
+      if (!InternetDomainName.from(new URI(request.postLink()).getHost()).topPrivateDomain().toString().equals(SAORPG_HOSTNAME)) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            "Post link should be from sao-rpg domain");
+      }
+    } catch (URISyntaxException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Post link is not a valid URI", e);
     }
     RollMetadata metadata = new RollMetadata(VERSION, request.postLink(), request.purpose(), request.character());
     return this.rollerService.roll(metadata);
