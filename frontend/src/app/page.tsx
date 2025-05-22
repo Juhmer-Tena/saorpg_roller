@@ -1,3 +1,5 @@
+import { RollCharacterFilter, RollIDFilter, RollPostFilter } from "@/components/RollerFilters";
+import { RollerForm } from "@/components/RollerForm";
 import RollTable from "@/components/RollTable";
 import { getQueryClient } from "@/lib/get-query-client";
 import { rollOptions } from "@/lib/roll";
@@ -132,120 +134,8 @@ export default function Home() {
                   </div>
                   <p className="font-semibold">Dice Roller</p>
                 </label>
-                <div className="tab-content bg-base-100 border-base-300 p-6">
-                  <div className="list gap-1.5 p-1">
-                    <label className="floating-label">
-                      <span>Name</span>
-                      <input
-                        id="field_name"
-                        type="text"
-                        placeholder="Name"
-                        className="input input-md"
-                      />
-                    </label>
-                    <label className="floating-label">
-                      <span>Post URL</span>
-                      <input
-                        id="field_url"
-                        type="text"
-                        placeholder="Post Link"
-                        className="input input-md"
-                      />
-                    </label>
-                    <label className="floating-label">
-                      <span>Roll Purpose</span>
-                      <input
-                        id="field_purpose"
-                        type="text"
-                        placeholder="Roll Purpose"
-                        className="input input-md"
-                      />
-                    </label>
-                  </div>
 
-                  <div className="card-actions justify-end pt-3 pr-1">
-                    <button
-                      id="btn_roll"
-                      className="btn bg-primary border-primary text-white"
-                    >
-                      Roll!
-                    </button>
-                  </div>
-
-                  <div className="bg-base-100 border-base-100 collapse-arrow collapse">
-                    <input type="checkbox" />
-                    <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 align-middle font-semibold">
-                      Advanced Roll Options
-                    </div>
-                    <div className="collapse-content pl-2 text-sm">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex flex-row gap-0 p-0">
-                          <input
-                            id="bDoBasicMultiroll"
-                            type="checkbox"
-                            className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
-                          />
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
-                            <p className="m-1.5 text-xs">Do Multi-Roll.</p>
-                            <div className="tooltip-content text-xs">
-                              Perform a standard roll multiple times.
-                            </div>
-                          </div>
-                          <input
-                            id="int_BasicMultiRoll"
-                            type="number"
-                            className="input validator input-xs w-15 justify-end rounded-none p-3"
-                            placeholder="2"
-                            min="1"
-                            max="10"
-                            ng-disabled="bDoMultiroll"
-                          />
-                        </div>
-                        <div className="flex flex-row gap-0 p-0 pr-3">
-                          <input
-                            id="bDoAoERoll"
-                            type="checkbox"
-                            className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
-                          />
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
-                            <p className="m-1.5 text-xs">Do AoE Roll.</p>
-                            <div className="tooltip-content text-xs">
-                              Rolls the BD four (4) times in each standard roll.
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-row gap-0 p-0">
-                          <input
-                            id="bDoMultiMDRoll"
-                            type="checkbox"
-                            className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
-                          />
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
-                            <p className="m-1.5 text-xs">Do Multi-MD Roll.</p>
-                            <div className="tooltip-content text-xs">
-                              Rolls the MD multiple times in each standard roll.
-                            </div>
-                          </div>
-                          <input
-                            id="int_MultiMDRoll"
-                            type="number"
-                            className="input validator input-xs w-15 justify-end rounded-none p-3"
-                            placeholder="2"
-                            min="1"
-                            max="10"
-                            ng-disabled="bDoMultiroll"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <RollerForm />
 
                 <label className="tab text-primary">
                   <input type="radio" name="sao_roller" />
@@ -265,76 +155,10 @@ export default function Home() {
                 </label>
                 <div className="tab-content bg-base-100 border-base-300 p-6">
                   <div className="min-md:h-1"></div>
-                  <div className="list gap-1.5 p-1">
-                    <fieldset className="fieldset">
-                      <legend className="fieldset-legend">
-                        Search by Roll ID#
-                      </legend>
-                      <input
-                        id="field_lookup_id"
-                        type="text"
-                        className="input"
-                        placeholder="Roll ID#"
-                      />
-                      <div>
-                        <button
-                          id="btn_lookup_id"
-                          className="btn bg-primary border-primary btn-sm text-white"
-                        >
-                          Search by ID!
-                        </button>
-                      </div>
-                    </fieldset>
-                  </div>
+                  <RollIDFilter />
                   <div className="p-0">
-                    <div className="bg-base-100 collapse-arrow collapse">
-                      <input type="checkbox" />
-                      <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
-                        Search by Name.
-                      </div>
-                      <div className="collapse-content pl-2 text-sm">
-                        <fieldset className="fieldset">
-                          <input
-                            id="field_lookup_name"
-                            type="text"
-                            className="input"
-                            placeholder="Name"
-                          />
-                          <div>
-                            <button
-                              id="btn_lookup_name"
-                              className="btn bg-primary border-primary btn-sm text-white"
-                            >
-                              Search!
-                            </button>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div>
-                    <div className="bg-base-100 collapse-arrow collapse">
-                      <input type="checkbox" />
-                      <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
-                        Search by Post Link.
-                      </div>
-                      <div className="collapse-content pl-2 text-sm">
-                        <fieldset className="fieldset">
-                          <input
-                            id="field_lookup_url"
-                            type="text"
-                            className="input"
-                            placeholder="Post Link"
-                          />
-                          <div>
-                            <button
-                              id="btn_lookup_url"
-                              className="btn bg-primary border-primary btn-sm text-white"
-                            >
-                              Search by Post Link!
-                            </button>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div>
+                    <RollCharacterFilter />
+                    <RollPostFilter />
                   </div>
                 </div>
               </div>

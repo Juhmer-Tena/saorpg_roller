@@ -14,20 +14,43 @@ export type Roll = {
   mobDie: number;
 }
 
-type FilterParameters = {
-  character: string;
-  post: string;
-} | {
+export type FilterParameters = {
   character: string;
 } | {
   post: string;
 }
 
-export type FetchParameters = {
+type FetchRecentParams = {
   type: "recent";
-} | {
+}
+
+type FetchFilteredParams = {
   type: "filtered";
   params: FilterParameters;
+}
+
+export type FetchByIdParams = {
+  type: "byId";
+  id: number | string;
+}
+
+export type FetchParameters = FetchRecentParams | FetchFilteredParams | FetchByIdParams;
+
+export type GenerateRollParameters = {
+  character: string;
+  postLink: string;
+  purpose: string;
+}
+
+export async function performRoll(baseUrl: string, params: GenerateRollParameters) {
+  const response = await fetch(`${baseUrl}/roll`, {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+  return await response.json() as Array<Roll>;
 }
 
 async function retrieveLast50Rolls(baseUrl: string) {
@@ -41,12 +64,29 @@ async function lookupFilteredRolls(baseUrl: string, params: FilterParameters) {
   return await response.json() as Array<Roll>;
 }
 
+async function lookupRollById(baseUrl: string, id: number | string) {
+  if (typeof id === "string") {
+    const matchedNumbers = id.match(/\d+/);
+    if (matchedNumbers === null) {
+      throw new Error("No numbers were found in the id queried");
+    }
+    id = matchedNumbers[0];
+    if (matchedNumbers.length !== 1) {
+      console.warn(`Multiple numbers were matched in the input. Retrieving first match: ${id}`)
+    }
+  }
+  const response = await fetch(`${baseUrl}/roll/${id}`);
+  return [await response.json()] as Array<Roll>;
+}
+
 function retrieveTableRolls(props: FetchParameters) {
   const baseUrl = getBaseURL();
 
   switch (props.type) {
     case "filtered":
       return lookupFilteredRolls(baseUrl, props.params);
+    case "byId":
+      return lookupRollById(baseUrl, props.id);
     case "recent":
     default:
       return retrieveLast50Rolls(baseUrl);
@@ -59,4 +99,3 @@ export function rollOptions(props: FetchParameters) {
     queryFn: () => retrieveTableRolls(props),
   });
 }
-
