@@ -5,7 +5,14 @@ import { GenerateRollParameters, performRoll } from "@/lib/roll";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRollContext } from "./RollContext";
+import { z } from "zod/v4";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 
+const GenerateRollSchema = z.strictObject({
+  character: z.string().trim().min(1, { error: "Character name is required" }),
+  postLink: z.url({ hostname: /^sao-rpg\.com$/ }),
+  purpose: z.string().trim().min(1, { error: "Purpose is required" }),
+}).required();
 
 export function RollerForm() {
   const baseUrl = getBaseURL();
@@ -15,8 +22,11 @@ export function RollerForm() {
   const { params } = useRollContext();
 
   const {
-    register, handleSubmit
-  } = useForm<GenerateRollParameters>();
+    register, handleSubmit, formState: { errors },
+  } = useForm<GenerateRollParameters>({
+    // Currently required to use standard schema because zod v4 is not supported by the zod resolver
+    resolver: standardSchemaResolver(GenerateRollSchema),
+  });
 
   const mutation = useMutation({
     mutationFn: (params: GenerateRollParameters) => performRoll(baseUrl, params),
@@ -40,6 +50,11 @@ export function RollerForm() {
             {...register("character")}
           />
         </label>
+        { errors?.character &&
+          <div role="alert" className="alert alert-error alert-soft">
+            <span>Error! {errors.character.message}</span>
+          </div>
+        }
         <label className="floating-label">
           <span>Post Link</span>
           <input
@@ -50,6 +65,11 @@ export function RollerForm() {
             {...register("postLink")}
           />
         </label>
+        { errors?.postLink &&
+          <div role="alert" className="alert alert-error alert-soft">
+            <span>Error! {errors.postLink.message}</span>
+          </div>
+        }
         <label className="floating-label">
           <span>Roll Purpose</span>
           <input
@@ -60,6 +80,11 @@ export function RollerForm() {
             {...register("purpose")}
           />
         </label>
+        { errors?.purpose &&
+          <div role="alert" className="alert alert-error alert-soft">
+            <span>Error! {errors.purpose.message}</span>
+          </div>
+        }
       </div>
 
       <div className="card-actions justify-end pt-3 pr-1">
