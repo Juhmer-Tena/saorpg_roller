@@ -1,15 +1,8 @@
 import { RollCharacterFilter, RollIDFilter, RollPostFilter } from "@/components/RollerFilters";
 import { RollerForm } from "@/components/RollerForm";
 import RollTable from "@/components/RollTable";
-import { getQueryClient } from "@/lib/get-query-client";
-import { rollOptions } from "@/lib/roll";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default function Home() {
-  const queryClient = getQueryClient();
-
-  void queryClient.prefetchQuery(rollOptions({ type: "recent" }));
-
   return (
     <div id="custom_img_bg" className="bg-cover bg-center">
       <div className="bg-base-100 container m-auto w-250 p-5 pt-5 max-md:w-100">
@@ -185,11 +178,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col justify-center">
-          <div className="overflow-x-auto">
-            <HydrationBoundary state={dehydrate(queryClient)}>
-              <RollTable />
-            </HydrationBoundary>
-          </div>
+          <RollTable />
           <div className="divider"></div>
 
           <div className="m-auto w-180 max-md:w-90">

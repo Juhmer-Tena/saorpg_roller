@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { isServer, keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { getBaseURL } from "./get-query-client";
 
 export type Roll = {
@@ -29,9 +29,9 @@ type FetchFilteredParams = {
   params: FilterParameters;
 }
 
-export type FetchByIdParams = {
+type FetchByIdParams = {
   type: "byId";
-  id: number | string;
+  id: string;
 }
 
 export type FetchParameters = FetchRecentParams | FetchFilteredParams | FetchByIdParams;
@@ -64,16 +64,14 @@ async function lookupFilteredRolls(baseUrl: string, params: FilterParameters) {
   return await response.json() as Array<Roll>;
 }
 
-async function lookupRollById(baseUrl: string, id: number | string) {
-  if (typeof id === "string") {
-    const matchedNumbers = id.match(/\d+/);
-    if (matchedNumbers === null) {
-      throw new Error("No numbers were found in the id queried");
-    }
-    id = matchedNumbers[0];
-    if (matchedNumbers.length !== 1) {
-      console.warn(`Multiple numbers were matched in the input. Retrieving first match: ${id}`)
-    }
+async function lookupRollById(baseUrl: string, id: string) {
+  const matchedNumbers = id.match(/\d+/);
+  if (matchedNumbers === null) {
+    throw new Error("No numbers were found in the id queried");
+  }
+  id = matchedNumbers[0];
+  if (matchedNumbers.length !== 1) {
+    console.warn(`Multiple numbers were matched in the input. Retrieving first match: ${id}`)
   }
   const response = await fetch(`${baseUrl}/roll/${id}`);
   return [await response.json()] as Array<Roll>;
@@ -97,5 +95,6 @@ export function rollOptions(props: FetchParameters) {
   return queryOptions({
     queryKey: ["rolls", props],
     queryFn: () => retrieveTableRolls(props),
+    placeholderData: keepPreviousData,
   });
 }

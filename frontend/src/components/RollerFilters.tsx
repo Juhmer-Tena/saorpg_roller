@@ -1,20 +1,25 @@
 "use client";
 
-import type { FetchByIdParams, FilterParameters } from "@/lib/roll";
+import type { FilterParameters } from "@/lib/roll";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useRollContext } from "./RollContext";
+import { startTransition } from "react";
 
 export function RollIDFilter() {
-  const { setFetchParams } = useRollContext();
+  const { setFetchParamsAction } = useRollContext();
 
   const {
     register, handleSubmit
-  } = useForm<Pick<FetchByIdParams, "id">>();
+  } = useForm<{ id: string }>();
 
-  const onSubmit: SubmitHandler<Pick<FetchByIdParams, "id">> = ({ id }) => setFetchParams({
-    type: "byId",
-    id,
-  });
+  const onSubmit: SubmitHandler<{ id: string }> = ({ id }) => {
+    startTransition(() => {
+      setFetchParamsAction({
+        type: "byId",
+        id,
+      });
+    });
+  };
 
   return (
     <form className="gap-1.5 p-1" onSubmit={handleSubmit(onSubmit)}>
@@ -41,16 +46,20 @@ export function RollIDFilter() {
 }
 
 export function RollCharacterFilter() {
-  const { setFetchParams } = useRollContext();
+  const { setFetchParamsAction } = useRollContext();
 
   const {
     register, handleSubmit
   } = useForm<FilterParameters>();
 
-  const onSubmit: SubmitHandler<FilterParameters> = (params) => setFetchParams({
-    type: "filtered",
-    params,
-  });
+  const onSubmit: SubmitHandler<FilterParameters> = async (params) => {
+    startTransition(() => {
+      setFetchParamsAction({
+        type: "filtered",
+        params,
+      });
+    });
+  };
 
   return (
     <div className="bg-base-100 collapse-arrow collapse">
@@ -78,16 +87,20 @@ export function RollCharacterFilter() {
 }
 
 export function RollPostFilter() {
-  const { setFetchParams } = useRollContext();
+  const { setFetchParamsAction } = useRollContext();
 
   const {
     register, handleSubmit
   } = useForm<FilterParameters>();
 
-  const onSubmit: SubmitHandler<FilterParameters> = (params) => setFetchParams({
-    type: "filtered",
-    params,
-  });
+  const onSubmit: SubmitHandler<FilterParameters> = (params) => {
+    startTransition(() => {
+      setFetchParamsAction({
+        type: "filtered",
+        params,
+      });
+    });
+  };
 
   return (
     <div className="bg-base-100 collapse-arrow collapse">
