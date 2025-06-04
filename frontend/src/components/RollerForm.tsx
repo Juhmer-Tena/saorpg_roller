@@ -5,14 +5,6 @@ import { GenerateRollParameters, performRoll } from "@/lib/roll";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRollContext } from "./RollContext";
-import { z } from "zod/v4";
-import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
-
-const GenerateRollSchema = z.strictObject({
-  character: z.string().trim().min(1, { error: "Character name is required" }),
-  postLink: z.url({ hostname: /^sao-rpg\.com$/ }),
-  purpose: z.string().trim().min(1, { error: "Purpose is required" }),
-}).required();
 
 export function RollerForm() {
   const baseUrl = getBaseURL();
@@ -24,8 +16,8 @@ export function RollerForm() {
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<GenerateRollParameters>({
-    // Currently required to use standard schema because zod v4 is not supported by the zod resolver
-    resolver: standardSchemaResolver(GenerateRollSchema),
+    // Use HTML5 form validation
+    shouldUseNativeValidation: true,
   });
 
   const mutation = useMutation({
@@ -46,45 +38,48 @@ export function RollerForm() {
             id="field_name"
             type="text"
             placeholder="Name"
-            className="input input-md"
-            {...register("character")}
+            className="input input-md validator"
+            {...register("character", {
+              required: "Enter the character name.",
+            })}
           />
+          <p className="validator-hint min-h-lh">{errors.character?.message}</p>
         </label>
-        { errors?.character &&
-          <div role="alert" className="alert alert-error alert-soft">
-            <span>Error! {errors.character.message}</span>
-          </div>
-        }
         <label className="floating-label">
           <span>Post Link</span>
           <input
             id="field_url"
-            type="text"
+            type="url"
             placeholder="Post Link"
-            className="input input-md"
-            {...register("postLink")}
+            className="input input-md validator"
+            {...register("postLink", {
+              required: "URL to post is required",
+              // This regex is not really ideal but it works. It requires https, any optional
+              // subdomains, the explicit hostname sao-rpg.com, and prevents any additional domains
+              // from being added to the end while allowing any path. It is not ideal because it was
+              // handwritten, but it should cover most cases. This validation is really only for UX
+              // and the backend performs validation as well.
+              pattern: {
+                value: /^https:\/\/(.*\.)?sao-rpg\.com(\/\.*)*$/,
+                message: "URL must be to a page on SAO-RPG"
+              },
+            })}
           />
+          <p className="validator-hint min-h-lh">{errors.postLink?.message}</p>
         </label>
-        { errors?.postLink &&
-          <div role="alert" className="alert alert-error alert-soft">
-            <span>Error! {errors.postLink.message}</span>
-          </div>
-        }
         <label className="floating-label">
           <span>Roll Purpose</span>
           <input
             id="field_purpose"
             type="text"
             placeholder="Roll Purpose"
-            className="input input-md"
-            {...register("purpose")}
+            className="input input-md validator"
+            {...register("purpose", {
+              required: "Enter the purpose for the roll.",
+            })}
           />
+          <p className="validator-hint min-h-lh">{errors.purpose?.message}</p>
         </label>
-        { errors?.purpose &&
-          <div role="alert" className="alert alert-error alert-soft">
-            <span>Error! {errors.purpose.message}</span>
-          </div>
-        }
       </div>
 
       <div className="card-actions justify-end pt-3 pr-1">
