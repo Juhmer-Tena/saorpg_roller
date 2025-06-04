@@ -26,7 +26,17 @@ export function RollTableBody() {
   const { data, status, isFetching } = useQuery(rollOptions(fetchParams));
 
   if (status === "error") {
-    return <p style={{ color: "red" }}>Error loading Rolls!</p>
+    return (
+      <tbody>
+        <tr>
+          <td colSpan={10}>
+            <div role="alert" className="alert alert-error">
+              <span>Error loading Rolls!</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    );
   }
 
   if (status === "pending" || isFetching) {
