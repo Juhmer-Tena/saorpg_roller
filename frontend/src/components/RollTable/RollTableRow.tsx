@@ -1,5 +1,6 @@
 import { type Roll } from "@/lib/roll";
 import { LocalizedTimestamp } from "../LocalizedTimestamp";
+import Link from "next/link";
 
 function RollTableCellSkeleton() {
   return (
@@ -73,7 +74,7 @@ export function RollTableRow({ roll }: { roll: Roll }) {
       <td>{roll.mobDie}</td>
       <td>{roll.character}</td>
       <td>
-        <button className="btn btn-xs btn-ghost">
+        <Link href={roll.post} className="btn btn-xs btn-ghost">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -84,7 +85,7 @@ export function RollTableRow({ roll }: { roll: Roll }) {
           >
             <path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
           </svg>
-        </button>
+        </Link>
       </td>
       <td>{roll.purpose}</td>
       <td>
