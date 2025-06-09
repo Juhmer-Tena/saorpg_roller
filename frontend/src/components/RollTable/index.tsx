@@ -14,8 +14,8 @@ function RollTableHeader() {
       <td scope="col" className="w-1">MD</td>
       <td scope="col" className="w-30">Name</td>
       <td scope="col" className="w-3 pl-5">Link</td>
-      <th scope="col">Purpose</th>
-      <th scope="col">Time</th>
+      <td scope="col">Purpose</td>
+      <td scope="col">Time</td>
       <th scope="col" className="w-1"></th>
     </tr>
   );
