@@ -3,7 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRollContext } from "../RollContext";
 import { rollOptions } from "@/lib/roll";
-import { RollTableRow, RollTableRowSkeleton } from "./RollTableRow";
+import { RollTableRow } from "./RollTableRow";
+import { RollTableRowSkeleton } from "./RollTableRowSkeleton";
 
 export function RollTableBodySkeleton({ numOfRows = 3 }) {
   const getRows = (n: number) => {
