@@ -229,6 +229,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* TODO: Make this better and not just something at the bottom */}
+        <div>
+          <Link href="/dependency_licenses.txt">Link to licenses for dependencies (legal stuff)</Link>
+        </div>
       </div>
       <input type="checkbox" id="modal_settings" className="modal-toggle" />
       <div className="modal" role="dialog">
