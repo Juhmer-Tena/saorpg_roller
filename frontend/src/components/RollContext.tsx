@@ -1,7 +1,7 @@
 "use client";
 
 import type { FetchParameters } from "@/lib/roll";
-import { createContext, type ReactNode, useState, useContext, type SetStateAction, type Dispatch, useTransition } from "react";
+import { createContext, type ReactNode, useState, useContext, type SetStateAction, type Dispatch } from "react";
 
 const RollContext = createContext<{
   params: FetchParameters;

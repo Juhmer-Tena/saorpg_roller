@@ -32,7 +32,7 @@ export default async function RollTable() {
         <thead>
           <RollTableHeader />
         </thead>
-        <Suspense fallback={<RollTableBodySkeleton numOfRows={3}/>}>
+        <Suspense fallback={<RollTableBodySkeleton />}>
           <HydrationBoundary state={dehydrate(queryClient)}>
             <RollTableBody />
           </HydrationBoundary>
