@@ -32,11 +32,11 @@ export function RollTableRow({ roll }: { roll: Roll }) {
       <td>
         <LocalizedTimestamp timestamp={new Date(roll.timestamp)} />
       </td>
-      <td className="m-0 p-0">
+      <th className="m-0 p-0">
         <span onClick={copyToKeyboard} className="btn btn-xs btn-ghost">
           <CopyToClipboardIcon />
         </span>
-      </td>
+      </th>
     </tr>
   );
 }
