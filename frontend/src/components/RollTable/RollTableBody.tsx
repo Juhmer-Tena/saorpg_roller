@@ -5,16 +5,18 @@ import { useRollContext } from "../RollContext";
 import { rollOptions } from "@/lib/roll";
 import { RollTableRow } from "./RollTableRow";
 import { RollTableRowSkeleton } from "./RollTableRowSkeleton";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export function RollTableBodySkeleton({ numOfRows = 3 }) {
   const getRows = (n: number) => {
     const arr = [];
     for (let i = 0; i < n; i++) {
-      arr.push(<RollTableRowSkeleton key={i}/>);
+      arr.push(<RollTableRowSkeleton key={i} />);
     }
     return arr;
   }
-  
+
   return (
     <tbody>
       {getRows(numOfRows)}
@@ -24,9 +26,41 @@ export function RollTableBodySkeleton({ numOfRows = 3 }) {
 
 export function RollTableBody() {
   const { params: fetchParams } = useRollContext();
-  const { data, status, isFetching } = useQuery(rollOptions(fetchParams));
+  const { data, status, isFetching, isFetchedAfterMount } = useQuery(rollOptions(fetchParams));
+
+  useEffect(() => {
+    if (status === "error") {
+      switch (fetchParams.type) {
+        case "byId":
+          toast.error(`Failed to fetch roll with id ${fetchParams.id}. Note: This id may exclude ` +
+            'the version letter you entered. This is to be expected.')
+          break;
+        case "filtered":
+          toast.error("Failed to fetch rolls filtered by character or post.");
+          break;
+        case "recent":
+        default:
+          toast.error("Failed to retrieve recent rolls.");
+          break;
+      }
+    } else if (isFetchedAfterMount) {
+      switch (fetchParams.type) {
+        case "byId":
+          toast.success(`Fetched roll with id ${fetchParams.id}.`)
+          break;
+        case "filtered":
+          toast.success("Fetched rolls filtered by character or post.");
+          break;
+        case "recent":
+        default:
+          toast.error("Fetched recent rolls.");
+          break;
+      }
+    }
+  }, [fetchParams, status, isFetchedAfterMount]);
 
   if (status === "error") {
+
     return (
       <tbody>
         <tr>
@@ -42,7 +76,7 @@ export function RollTableBody() {
 
   if (status === "pending" || isFetching) {
     if (fetchParams.type === "byId") {
-      return <RollTableBodySkeleton numOfRows={1}/>;
+      return <RollTableBodySkeleton numOfRows={1} />;
     }
     return <RollTableBodySkeleton />;
   }

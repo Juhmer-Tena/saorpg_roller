@@ -5,11 +5,13 @@ import { LocalizedTimestamp } from "../LocalizedTimestamp";
 import Link from "next/link";
 import { CopyToClipboardIcon } from "./CopyToClipboardIcon";
 import { PostLinkIcon } from "./PostLinkIcon";
+import { toast } from "react-toastify";
 
 export function RollTableRow({ roll }: { roll: Roll }) {
   const combinedVersion = `${roll.version.toUpperCase()}${roll.id}`;
 
   const copyToKeyboard = async () => {
+    toast.info(`Copied roll ${combinedVersion} to clipboard`);
     await window.navigator.clipboard.writeText(
       `ID: ${combinedVersion} | BD: ${roll.battleDie} | CD: ${roll.craftDie} | ` +
       `LD: ${roll.lootDie} | MD: ${roll.mobDie}`);

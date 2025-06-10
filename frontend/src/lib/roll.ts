@@ -50,7 +50,10 @@ export async function performRoll(baseUrl: string, params: GenerateRollParameter
       "Content-Type": "application/json"
     }
   });
-  return await response.json() as Array<Roll>;
+  if (!response.ok) {
+    throw new Error("4xx/5xx response from server");
+  }
+  return await response.json() as Roll;
 }
 
 async function retrieveLast50Rolls(baseUrl: string) {

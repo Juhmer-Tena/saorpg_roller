@@ -5,6 +5,7 @@ import { GenerateRollParameters, performRoll } from "@/lib/roll";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRollContext } from "./RollContext";
+import { toast } from "react-toastify";
 
 export function RollerForm() {
   const baseUrl = getBaseURL();
@@ -22,8 +23,12 @@ export function RollerForm() {
 
   const mutation = useMutation({
     mutationFn: (params: GenerateRollParameters) => performRoll(baseUrl, params),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(`Generated roll ${data.version.toUpperCase()}${data.id}`);
       queryClient.invalidateQueries({ queryKey: ["rolls", params] });
+    },
+    onError: (error) => {
+      toast.error(`Failed to generate roll: ${error.message}`);
     }
   });
 
