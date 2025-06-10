@@ -66,12 +66,18 @@ export async function performRoll(
 
 async function retrieveLast50Rolls(baseUrl: string) {
   const response = await fetch(`${baseUrl}/roll/last50`);
+  if (!response.ok) {
+    throw new Error("4xx/5xx response from server");
+  }
   return (await response.json()) as Array<Roll>;
 }
 
 async function lookupFilteredRolls(baseUrl: string, params: FilterParameters) {
   const searchParams = new URLSearchParams(params);
   const response = await fetch(`${baseUrl}/roll?${searchParams}`);
+  if (!response.ok) {
+    throw new Error("4xx/5xx response from server");
+  }
   return (await response.json()) as Array<Roll>;
 }
 
@@ -87,6 +93,9 @@ async function lookupRollById(baseUrl: string, id: string) {
     );
   }
   const response = await fetch(`${baseUrl}/roll/${id}`);
+  if (!response.ok) {
+    throw new Error("4xx/5xx response from server");
+  }
   return [await response.json()] as Array<Roll>;
 }
 
