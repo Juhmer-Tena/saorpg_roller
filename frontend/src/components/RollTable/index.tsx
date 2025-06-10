@@ -7,13 +7,27 @@ import { RollTableBody, RollTableBodySkeleton } from "./RollTableBody";
 function RollTableHeader() {
   return (
     <tr>
-      <th scope="col" className="w-5">Roll ID</th>
-      <td scope="col" className="w-1">BD</td>
-      <td scope="col" className="w-1">CD</td>
-      <td scope="col" className="w-1">LD</td>
-      <td scope="col" className="w-1">MD</td>
-      <td scope="col" className="w-30">Name</td>
-      <td scope="col" className="w-3 pl-5">Link</td>
+      <th scope="col" className="w-5">
+        Roll ID
+      </th>
+      <td scope="col" className="w-1">
+        BD
+      </td>
+      <td scope="col" className="w-1">
+        CD
+      </td>
+      <td scope="col" className="w-1">
+        LD
+      </td>
+      <td scope="col" className="w-1">
+        MD
+      </td>
+      <td scope="col" className="w-30">
+        Name
+      </td>
+      <td scope="col" className="w-3 pl-5">
+        Link
+      </td>
       <td scope="col">Purpose</td>
       <td scope="col">Time</td>
       <th scope="col" className="w-1"></th>
@@ -27,7 +41,7 @@ export default async function RollTable() {
   await queryClient.prefetchQuery(rollOptions({ type: "recent" }));
 
   return (
-    <div className="overflow-x-auto relative">
+    <div className="relative overflow-x-auto">
       <table className="table-pin-rows table-pin-cols table table-auto">
         <thead>
           <RollTableHeader />

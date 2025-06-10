@@ -1,4 +1,8 @@
-import { RollCharacterFilter, RollIDFilter, RollPostFilter } from "@/components/RollerFilters";
+import {
+  RollCharacterFilter,
+  RollIDFilter,
+  RollPostFilter,
+} from "@/components/RollerFilters";
 import { RollerForm } from "@/components/RollerForm";
 import RollTable from "@/components/RollTable";
 import Link from "next/link";
@@ -29,9 +33,7 @@ export default function Home() {
                       </p>
                       <div className="bg-base-100/80 border-base-100/30 m-auto flex flex-row gap-1 rounded-lg border-1">
                         <div>
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
+                          <div className="tooltip tooltip-top grow">
                             <label
                               htmlFor="modal_settings"
                               className="btn btn-xs btn-ghost justify-start"
@@ -53,9 +55,7 @@ export default function Home() {
                           </div>
                         </div>
                         <div>
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
+                          <div className="tooltip tooltip-top grow">
                             <Link
                               href="https://discord.gg/p2zsGGJ"
                               target="_blank"
@@ -79,10 +79,11 @@ export default function Home() {
                           </div>
                         </div>
                         <div>
-                          <div
-                            className="tooltip tooltip-top grow"
-                          >
-                            <Link href="https://www.sao-rpg.com/" target="_blank">
+                          <div className="tooltip tooltip-top grow">
+                            <Link
+                              href="https://www.sao-rpg.com/"
+                              target="_blank"
+                            >
                               <label className="btn btn-xs btn-ghost justify-start">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +233,9 @@ export default function Home() {
 
         {/* TODO: Make this better and not just something at the bottom */}
         <div>
-          <Link href="/dependency_licenses.txt">Link to licenses for dependencies (legal stuff)</Link>
+          <Link href="/dependency_licenses.txt">
+            Link to licenses for dependencies (legal stuff)
+          </Link>
         </div>
       </div>
       <input type="checkbox" id="modal_settings" className="modal-toggle" />

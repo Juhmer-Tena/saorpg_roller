@@ -1,8 +1,8 @@
 /**
  * React wrapper for the chat square fill icon from Bootstrap icons.
- * 
+ *
  * Bootstrap license:
- * 
+ *
  * Copyright (c) 2019-2024 The Bootstrap Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

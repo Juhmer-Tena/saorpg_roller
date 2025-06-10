@@ -14,7 +14,8 @@ export function RollTableRow({ roll }: { roll: Roll }) {
     toast.info(`Copied roll ${combinedVersion} to clipboard`);
     await window.navigator.clipboard.writeText(
       `ID: ${combinedVersion} | BD: ${roll.battleDie} | CD: ${roll.craftDie} | ` +
-      `LD: ${roll.lootDie} | MD: ${roll.mobDie}`);
+        `LD: ${roll.lootDie} | MD: ${roll.mobDie}`,
+    );
   };
 
   return (

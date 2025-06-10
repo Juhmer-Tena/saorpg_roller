@@ -12,59 +12,67 @@ export type Roll = {
   lootDie: number;
   craftDie: number;
   mobDie: number;
-}
+};
 
-export type FilterParameters = {
-  character: string;
-} | {
-  post: string;
-}
+export type FilterParameters =
+  | {
+      character: string;
+    }
+  | {
+      post: string;
+    };
 
 type FetchRecentParams = {
   type: "recent";
-}
+};
 
 type FetchFilteredParams = {
   type: "filtered";
   params: FilterParameters;
-}
+};
 
 type FetchByIdParams = {
   type: "byId";
   id: string;
-}
+};
 
-export type FetchParameters = FetchRecentParams | FetchFilteredParams | FetchByIdParams;
+export type FetchParameters =
+  | FetchRecentParams
+  | FetchFilteredParams
+  | FetchByIdParams;
 
 export type GenerateRollParameters = {
   character: string;
   postLink: string;
   purpose: string;
-}
+};
 
-export async function performRoll(baseUrl: string, params: GenerateRollParameters) {
+export async function performRoll(
+  baseUrl: string,
+  params: GenerateRollParameters,
+) {
   const response = await fetch(`${baseUrl}/roll`, {
     method: "POST",
     body: JSON.stringify(params),
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
   if (!response.ok) {
     throw new Error("4xx/5xx response from server");
   }
-  return await response.json() as Roll;
+  return (await response.json()) as Roll;
 }
 
 async function retrieveLast50Rolls(baseUrl: string) {
   const response = await fetch(`${baseUrl}/roll/last50`);
-  return await response.json() as Array<Roll>;
+  return (await response.json()) as Array<Roll>;
 }
 
 async function lookupFilteredRolls(baseUrl: string, params: FilterParameters) {
   const searchParams = new URLSearchParams(params);
   const response = await fetch(`${baseUrl}/roll?${searchParams}`);
-  return await response.json() as Array<Roll>;
+  return (await response.json()) as Array<Roll>;
 }
 
 async function lookupRollById(baseUrl: string, id: string) {
@@ -74,7 +82,9 @@ async function lookupRollById(baseUrl: string, id: string) {
   }
   id = matchedNumbers[0];
   if (matchedNumbers.length !== 1) {
-    console.warn(`Multiple numbers were matched in the input. Retrieving first match: ${id}`)
+    console.warn(
+      `Multiple numbers were matched in the input. Retrieving first match: ${id}`,
+    );
   }
   const response = await fetch(`${baseUrl}/roll/${id}`);
   return [await response.json()] as Array<Roll>;

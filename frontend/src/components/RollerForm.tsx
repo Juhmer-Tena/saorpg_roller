@@ -15,27 +15,34 @@ export function RollerForm() {
   const { params } = useRollContext();
 
   const {
-    register, handleSubmit, formState: { errors },
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm<GenerateRollParameters>({
     // Use HTML5 form validation
     shouldUseNativeValidation: true,
   });
 
   const mutation = useMutation({
-    mutationFn: (params: GenerateRollParameters) => performRoll(baseUrl, params),
+    mutationFn: (params: GenerateRollParameters) =>
+      performRoll(baseUrl, params),
     onSuccess: (data) => {
       toast.success(`Generated roll ${data.version.toUpperCase()}${data.id}`);
       queryClient.invalidateQueries({ queryKey: ["rolls", params] });
     },
     onError: (error) => {
       toast.error(`Failed to generate roll: ${error.message}`);
-    }
+    },
   });
 
-  const onSubmit: SubmitHandler<GenerateRollParameters> = (data) => mutation.mutate(data);
+  const onSubmit: SubmitHandler<GenerateRollParameters> = (data) =>
+    mutation.mutate(data);
 
   return (
-    <form className="tab-content bg-base-100 border-base-300 p-6" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="tab-content bg-base-100 border-base-300 p-6"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="list gap-1.5 p-1">
         <label className="floating-label">
           <span>Name</span>
@@ -66,7 +73,7 @@ export function RollerForm() {
               // and the backend performs validation as well.
               pattern: {
                 value: /^https:\/\/(.*\.)?sao-rpg\.com(\/\.*)*$/,
-                message: "URL must be to a page on SAO-RPG"
+                message: "URL must be to a page on SAO-RPG",
               },
             })}
           />
@@ -109,9 +116,7 @@ export function RollerForm() {
                 type="checkbox"
                 className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
               />
-              <div
-                className="tooltip tooltip-top grow"
-              >
+              <div className="tooltip tooltip-top grow">
                 <p className="m-1.5 text-xs">Do Multi-Roll.</p>
                 <div className="tooltip-content text-xs">
                   Perform a standard roll multiple times.
@@ -133,9 +138,7 @@ export function RollerForm() {
                 type="checkbox"
                 className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
               />
-              <div
-                className="tooltip tooltip-top grow"
-              >
+              <div className="tooltip tooltip-top grow">
                 <p className="m-1.5 text-xs">Do AoE Roll.</p>
                 <div className="tooltip-content text-xs">
                   Rolls the BD four (4) times in each standard roll.
@@ -148,9 +151,7 @@ export function RollerForm() {
                 type="checkbox"
                 className="checkbox checkbox-sm checkbox-secondary m-1 rounded-none"
               />
-              <div
-                className="tooltip tooltip-top grow"
-              >
+              <div className="tooltip tooltip-top grow">
                 <p className="m-1.5 text-xs">Do Multi-MD Roll.</p>
                 <div className="tooltip-content text-xs">
                   Rolls the MD multiple times in each standard roll.

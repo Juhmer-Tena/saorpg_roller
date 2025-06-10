@@ -1,31 +1,42 @@
 "use client";
 
 import type { FetchParameters } from "@/lib/roll";
-import { createContext, type ReactNode, useState, useContext, type SetStateAction, type Dispatch } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useState,
+  useContext,
+  type SetStateAction,
+  type Dispatch,
+} from "react";
 
 const RollContext = createContext<{
   params: FetchParameters;
-  setFetchParamsAction: Dispatch<SetStateAction<FetchParameters>>,
+  setFetchParamsAction: Dispatch<SetStateAction<FetchParameters>>;
 }>({
   params: {
-    type: "recent"
+    type: "recent",
   },
-  setFetchParamsAction: () => { },
+  setFetchParamsAction: () => {},
 });
 
 export function useRollContext() {
   return useContext(RollContext);
 }
 
-export default function RollProvider({
-  children,
-}: {
-  children: ReactNode
-}) {
-  const [fetchParameters, setFetchParameters] = useState<FetchParameters>({ type: "recent" });
+export default function RollProvider({ children }: { children: ReactNode }) {
+  const [fetchParameters, setFetchParameters] = useState<FetchParameters>({
+    type: "recent",
+  });
 
-  return <RollContext.Provider value={{
-    params: fetchParameters,
-    setFetchParamsAction: setFetchParameters,
-  }}>{children}</RollContext.Provider>
+  return (
+    <RollContext.Provider
+      value={{
+        params: fetchParameters,
+        setFetchParamsAction: setFetchParameters,
+      }}
+    >
+      {children}
+    </RollContext.Provider>
+  );
 }

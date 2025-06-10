@@ -21,8 +21,8 @@ export function RollTableRowSkeleton() {
       <RollTableCellSkeleton />
       <RollTableCellSkeleton />
       <td className="px-2">
-        <div className="skeleton w-full min-h-full p-0 rounded-full">
-          <span className="btn btn-xs btn-ghost opacity-75 w-full min-h-full">
+        <div className="skeleton min-h-full w-full rounded-full p-0">
+          <span className="btn btn-xs btn-ghost min-h-full w-full opacity-75">
             <PostLinkIcon />
           </span>
         </div>
@@ -30,8 +30,8 @@ export function RollTableRowSkeleton() {
       <RollTableCellSkeleton />
       <RollTableCellSkeleton />
       <th className="m-0 p-0">
-        <div className="skeleton w-full min-h-full p-0 rounded-full">
-          <span className="btn btn-xs btn-ghost opacity-75 w-full min-h-full">
+        <div className="skeleton min-h-full w-full rounded-full p-0">
+          <span className="btn btn-xs btn-ghost min-h-full w-full opacity-75">
             <CopyToClipboardIcon />
           </span>
         </div>

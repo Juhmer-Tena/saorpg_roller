@@ -15,25 +15,25 @@ export function RollTableBodySkeleton({ numOfRows = 3 }) {
       arr.push(<RollTableRowSkeleton key={i} />);
     }
     return arr;
-  }
+  };
 
-  return (
-    <tbody>
-      {getRows(numOfRows)}
-    </tbody>
-  );
+  return <tbody>{getRows(numOfRows)}</tbody>;
 }
 
 export function RollTableBody() {
   const { params: fetchParams } = useRollContext();
-  const { data, status, isFetching, isFetchedAfterMount } = useQuery(rollOptions(fetchParams));
+  const { data, status, isFetching, isFetchedAfterMount } = useQuery(
+    rollOptions(fetchParams),
+  );
 
   useEffect(() => {
     if (status === "error") {
       switch (fetchParams.type) {
         case "byId":
-          toast.error(`Failed to fetch roll with id ${fetchParams.id}. Note: This id may exclude ` +
-            'the version letter you entered. This is to be expected.')
+          toast.error(
+            `Failed to fetch roll with id ${fetchParams.id}. Note: This id may exclude ` +
+              "the version letter you entered. This is to be expected.",
+          );
           break;
         case "filtered":
           toast.error("Failed to fetch rolls filtered by character or post.");
@@ -46,7 +46,7 @@ export function RollTableBody() {
     } else if (isFetchedAfterMount) {
       switch (fetchParams.type) {
         case "byId":
-          toast.success(`Fetched roll with id ${fetchParams.id}.`)
+          toast.success(`Fetched roll with id ${fetchParams.id}.`);
           break;
         case "filtered":
           toast.success("Fetched rolls filtered by character or post.");
@@ -60,7 +60,6 @@ export function RollTableBody() {
   }, [fetchParams, status, isFetchedAfterMount]);
 
   if (status === "error") {
-
     return (
       <tbody>
         <tr>
@@ -83,7 +82,9 @@ export function RollTableBody() {
 
   return (
     <tbody>
-      {data.map((roll) => <RollTableRow key={roll.id} roll={roll} />)}
+      {data.map((roll) => (
+        <RollTableRow key={roll.id} roll={roll} />
+      ))}
     </tbody>
   );
 }

@@ -12,13 +12,9 @@ export default function Providers({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RollProvider>
-        {children}
-      </RollProvider>
+      <RollProvider>{children}</RollProvider>
       <ReactQueryDevtools />
-      <ToastContainer 
-        theme="colored"
-      />
+      <ToastContainer theme="colored" />
     </QueryClientProvider>
   );
 }

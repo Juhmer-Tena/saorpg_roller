@@ -8,7 +8,9 @@ const timestampFormatter = new Intl.DateTimeFormat(undefined, {
 });
 
 export function LocalizedTimestamp({ timestamp }: { timestamp: Date }) {
-  const [formattedTimestamp, setFormattedTimestamp] = useState(timestampFormatter.format(timestamp));
+  const [formattedTimestamp, setFormattedTimestamp] = useState(
+    timestampFormatter.format(timestamp),
+  );
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {

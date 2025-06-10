@@ -8,9 +8,7 @@ import { startTransition } from "react";
 export function RollIDFilter() {
   const { setFetchParamsAction } = useRollContext();
 
-  const {
-    register, handleSubmit
-  } = useForm<{ id: string }>();
+  const { register, handleSubmit } = useForm<{ id: string }>();
 
   const onSubmit: SubmitHandler<{ id: string }> = ({ id }) => {
     startTransition(() => {
@@ -37,7 +35,7 @@ export function RollIDFilter() {
         <input
           id="btn_lookup_id"
           type="submit"
-          className="btn bg-primary border-primary btn-sm text-white w-fit"
+          className="btn bg-primary border-primary btn-sm w-fit text-white"
           value="Search by ID!"
         />
       </fieldset>
@@ -48,9 +46,7 @@ export function RollIDFilter() {
 export function RollCharacterFilter() {
   const { setFetchParamsAction } = useRollContext();
 
-  const {
-    register, handleSubmit
-  } = useForm<FilterParameters>();
+  const { register, handleSubmit } = useForm<FilterParameters>();
 
   const onSubmit: SubmitHandler<FilterParameters> = async (params) => {
     startTransition(() => {
@@ -67,7 +63,10 @@ export function RollCharacterFilter() {
       <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
         Search by Name.
       </div>
-      <form className="collapse-content pl-2 text-sm grid grid-cols-1 gap-1.5" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="collapse-content grid grid-cols-1 gap-1.5 pl-2 text-sm"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <input
           id="field_lookup_name"
           type="text"
@@ -78,7 +77,7 @@ export function RollCharacterFilter() {
         <input
           id="btn_lookup_name"
           type="submit"
-          className="btn bg-primary border-primary btn-sm text-white w-fit"
+          className="btn bg-primary border-primary btn-sm w-fit text-white"
           value="Search!"
         />
       </form>
@@ -89,9 +88,7 @@ export function RollCharacterFilter() {
 export function RollPostFilter() {
   const { setFetchParamsAction } = useRollContext();
 
-  const {
-    register, handleSubmit
-  } = useForm<FilterParameters>();
+  const { register, handleSubmit } = useForm<FilterParameters>();
 
   const onSubmit: SubmitHandler<FilterParameters> = (params) => {
     startTransition(() => {
@@ -108,7 +105,10 @@ export function RollPostFilter() {
       <div className="collapse-title text-base-content/35 text-ssm/8 pl-2 font-semibold">
         Search by Post Link.
       </div>
-      <form className="collapse-content pl-2 text-sm grid grid-cols-1 gap-1.5" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="collapse-content grid grid-cols-1 gap-1.5 pl-2 text-sm"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <input
           id="field_lookup_url"
           type="text"
@@ -119,7 +119,7 @@ export function RollPostFilter() {
         <input
           id="btn_lookup_url"
           type="submit"
-          className="btn bg-primary border-primary btn-sm text-white w-fit"
+          className="btn bg-primary border-primary btn-sm w-fit text-white"
           value="Search by Post Link!"
         />
       </form>
