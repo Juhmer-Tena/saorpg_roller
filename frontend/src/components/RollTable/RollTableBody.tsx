@@ -30,10 +30,7 @@ export function RollTableBody() {
     if (status === "error") {
       switch (fetchParams.type) {
         case "byId":
-          toast.error(
-            `Failed to fetch roll with id ${fetchParams.id}. Note: This id may exclude ` +
-              "the version letter you entered. This is to be expected.",
-          );
+          toast.error(`Failed to fetch roll with id ${fetchParams.id}`);
           break;
         case "filtered":
           toast.error("Failed to fetch rolls filtered by character or post.");
@@ -43,7 +40,7 @@ export function RollTableBody() {
           toast.error("Failed to retrieve recent rolls.");
           break;
       }
-    } else if (isFetchedAfterMount) {
+    } else if (status !== "pending" && !isFetching && isFetchedAfterMount) {
       switch (fetchParams.type) {
         case "byId":
           toast.success(`Fetched roll with id ${fetchParams.id}.`);
@@ -53,7 +50,7 @@ export function RollTableBody() {
           break;
         case "recent":
         default:
-          toast.error("Fetched recent rolls.");
+          toast.success("Fetched recent rolls.");
           break;
       }
     }
