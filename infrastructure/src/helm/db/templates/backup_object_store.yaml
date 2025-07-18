@@ -1,0 +1,19 @@
+{{- if .Values.backup.enabled }}
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: aws-backup-store
+spec:
+  configuration:
+    destinationPath: s3://saorpg-roller-backup/
+    s3Credentials:
+      accessKeyId:
+        name: aws-creds
+        key: S3_ACCESS_KEY_ID
+      secretAccessKey:
+        name: aws-creds
+        key: S3_ACCESS_SECRET_KEY
+    wal:
+      compression: bzip2
+  retentionPolicy: "30d"
+{{- end }}

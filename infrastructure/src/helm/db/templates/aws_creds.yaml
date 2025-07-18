@@ -1,0 +1,43 @@
+{{- if .Values.backup.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: awssm-secret
+stringData:
+  access-key: {{ .Values.secretManager.accessKeyId }}
+  secret-access-key: {{ .Values.secretManager.secretAccessKey }}
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: awssm-secretstore
+spec:
+  provider:
+    aws:
+      service: SecretsManager
+      region: us-west-1
+      auth:
+        secretRef:
+          accessKeyIDSecretRef:
+            name: awssm-secret
+            key: access-key
+          secretAccessKeySecretRef:
+            name: awssm-secret
+            key: secret-access-key
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: aws-creds
+spec:
+  refreshInterval: 15m
+  secretStoreRef:
+    name: awssm-secretstore
+    kind: SecretStore
+  target:
+    name: aws-creds
+    creationPolicy: Owner
+  dataFrom:
+  - extract:
+      key: s3-access-key
+{{- end }}
