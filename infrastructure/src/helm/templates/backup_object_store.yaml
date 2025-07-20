@@ -8,10 +8,10 @@ spec:
     destinationPath: s3://saorpg-roller-backup/
     s3Credentials:
       accessKeyId:
-        name: aws-creds
+        name: aws-s3-creds
         key: S3_ACCESS_KEY_ID
       secretAccessKey:
-        name: aws-creds
+        name: aws-s3-creds
         key: S3_ACCESS_SECRET_KEY
     wal:
       compression: bzip2
