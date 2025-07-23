@@ -1,3 +1,4 @@
+{{- if .Values.backup.enabled }}
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -13,3 +14,4 @@ spec:
   dataFrom:
   - extract:
       key: s3-access-key
+{{- end }}
