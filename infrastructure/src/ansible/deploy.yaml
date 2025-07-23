@@ -1,0 +1,155 @@
+---
+- name: Install miscellaneous stuff
+  hosts: localhost
+
+  tasks:
+  - name: Install helm-diff plugin
+    kubernetes.core.helm_plugin:
+      plugin_path: https://github.com/databus23/helm-diff
+
+- name: Install helm chart repositories
+  hosts: localhost
+
+  tasks:
+  - name: Add cloudnative-pg repository
+    kubernetes.core.helm_repository:
+      name: cnpg
+      repo_url: "https://cloudnative-pg.github.io/charts"
+
+  - name: Add cert-manager repository
+    kubernetes.core.helm_repository:
+      name: jetstack
+      repo_url: "https://charts.jetstack.io"
+
+  - name: Add external-secrets repository
+    kubernetes.core.helm_repository:
+      name: external-secrets
+      repo_url: "https://charts.external-secrets.io"
+
+  - name: Add apisix repository
+    kubernetes.core.helm_repository:
+      name: apisix
+      repo_url: "https://charts.apiseven.com"
+
+  - name: Add bitnami repository
+    kubernetes.core.helm_repository:
+      name: bitnami
+      repo_url: "https://charts.bitnami.com/bitnami"
+
+  - name: Add external-dns repository
+    kubernetes.core.helm_repository:
+      name: external-dns
+      repo_url: "https://kubernetes-sigs.github.io/external-dns/"
+
+- name: Install helm charts and manifests
+  hosts: localhost
+  vars_files:
+  - "vars/secret_manager_creds.yaml"
+
+  tasks:
+  - name: Install cloudnative-pg operator
+    kubernetes.core.helm:
+      name: cnpg
+      chart_ref: cnpg/cloudnative-pg
+      create_namespace: true
+      release_namespace: cnpg-system
+
+  - name: Install cert-manager controller
+    kubernetes.core.helm:
+      name: cert-manager
+      chart_ref: jetstack/cert-manager
+      create_namespace: true
+      release_namespace: cert-manager
+      values:
+        crds:
+          enabled: true
+
+  - name: Install plugin-barman-cloud to backup cloudnative-pg cluster
+    kubernetes.core.k8s:
+      apply: true
+      # Requires ansible kubernetes collections >= 2.4.0 (latest is fine)
+      src: "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.5.0/manifest.yaml"
+
+  - name: Install external-secrets operator
+    kubernetes.core.helm:
+      name: external-secrets
+      chart_ref: external-secrets/external-secrets
+      create_namespace: true
+      release_namespace: external-secrets
+
+  - name: Install apisix ingress controller
+    kubernetes.core.helm:
+      name: apisix
+      chart_ref: apisix/apisix
+      create_namespace: true
+      release_namespace: apisix-ingress
+      values:
+        service:
+          type: LoadBalancer
+        # ~~API-driven mode is better due to less resources but this isn't working so...~~
+        # When installing manually with helm it doesn't work...
+        apisix:
+          deployment:
+            role_traditional:
+              config_provider: yaml
+          ssl:
+            enabled: true
+        etcd:
+          enabled: false
+        ingress-controller:
+          enabled: true
+          # Enabled passes other values in the object to the ingress-controller object
+          # ~~This has to be disabled because the publishService isn't included in the default which
+          # causes issues with external-dns.~~
+          # ... Actually it needs to be enabled to set up the IngressClass correctly. We'll just put a
+          # manual step to make sure the publishService is set.
+          gatewayProxy:
+            createDefault: true
+          config:
+            provider:
+              type: apisix-standalone
+
+  - name: Patch GatewayProxy
+    kubernetes.core.k8s:
+      state: patched
+      api_version: apisix.apache.org/v1alpha1
+      kind: GatewayProxy
+      name: apisix-config
+      namespace: apisix-ingress
+      definition:
+        spec:
+          publishService: apisix-ingress/apisix-gateway
+
+  - name: Install external-dns controller
+    kubernetes.core.helm:
+      name: external-dns
+      chart_ref: external-dns/external-dns
+      create_namespace: true
+      # Use the same namespace because otherwise cannot access secrets
+      # Which would then require us to duplicate the installs
+      release_namespace: saorpg-roller
+      values:
+        provider:
+          name: cloudflare
+        env:
+        - name: CF_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-dns-creds
+              key: CF_API_TOKEN
+
+  - name: Wait for prerequisites to be finished initializing
+    ansible.builtin.wait_for:
+      timeout: 60
+
+  - name: Install saorpg-roller helm chart
+    kubernetes.core.helm:
+      name: saorpg-roller
+      chart_ref: "{{ playbook_dir }}/../helm"
+      create_namespace: true
+      release_namespace: saorpg-roller
+      values:
+        secretManager:
+          accessKeyId: "{{ access_key_id }}"
+          secretAccessKey: "{{ secret_access_key }}"
+    no_log: true
