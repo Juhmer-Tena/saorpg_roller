@@ -1,6 +1,9 @@
 # Prevent devcontainer secrets from being leaked
-.devcontainer/**/POSTGRES_PASSWORD
-.devcontainer/**/sqitch.conf
+POSTGRES_PASSWORD
+sqitch.conf
 
 .pnpm-store
 node_modules
+
+# Prevent secret manager secrets from being leaked
+secret_manager_creds.yaml
