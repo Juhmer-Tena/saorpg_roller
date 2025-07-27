@@ -1,14 +1,14 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: cloudflare-origin-ca
+  name: {{ .Values.cloudflare.originCertName }}
 spec:
   refreshInterval: 1h
   secretStoreRef:
     name: awssm-secretstore
     kind: SecretStore
   target:
-    name: cloudflare-origin-ca
+    name: {{ .Values.cloudflare.originCertName }}
     creationPolicy: Owner
     template:
       type: kubernetes.io/tls
