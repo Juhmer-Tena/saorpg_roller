@@ -15,12 +15,6 @@
       release_namespace: saorpg-roller
       state: absent
 
-  - name: Uninstall apisix ingress controller
-    kubernetes.core.helm:
-      name: apisix
-      release_namespace: apisix-ingress
-      state: absent
-
   - name: Uninstall external-secrets opererator
     kubernetes.core.helm:
       name: external-secrets
@@ -58,7 +52,7 @@
     loop:
     - saorpg-roller
     - external-dns
-    - apisix-ingress
+    - traefik
     - external-secrets
     - cert-manager
     - cnpg-system

@@ -1,0 +1,138 @@
+# Configure Network Ports and EntryPoints
+# EntryPoints are the network listeners for incoming traffic.
+ports:
+  # Defines the HTTP entry point named 'web'
+  web:
+    port: 80
+    # Instructs this entry point to redirect all traffic to the 'websecure' entry point
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+
+  # Defines the HTTPS entry point named 'websecure'
+  websecure:
+    port: 443
+
+  postgres:
+    port: 5432
+    expose:
+      default: true
+    # tls:
+    #   enabled: true
+
+# Enables the dashboard in Secure Mode
+api:
+  dashboard: true
+  insecure: false
+
+# Creates a BasiAuth Middleware and Secret for the Dashboard Security
+extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: dashboard-auth-secret
+    type: kubernetes.io/basic-auth
+    stringData:
+      username: admin
+      password: password # Set value when installing
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: dashboard-auth
+    spec:
+      basicAuth:
+        secret: dashboard-auth-secret
+  # Attempt to use HTTPRoute to enable access to traefik dashboard
+  - apiVersion: gateway.networking.k8s.io/v1
+    kind: HTTPRoute
+    metadata:
+      name: traefik-dashboard
+    spec:
+      parentRefs:
+      - name: traefik-gateway
+        sectionName: websecure
+      hostnames:
+      - "traefik-dashboard.docker.localhost"
+      rules:
+      - matches:
+        # Using PathPrefix for /dashboard and /api paths breaks the dashboard for some reason...
+        - path:
+            type: PathPrefix
+            value: /
+        filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: dashboard-auth
+        backendRefs:
+        - group: traefik.io # Ref to dashboard's TraefikService
+          kind: TraefikService
+          name: api@internal
+
+# We will route with Gateway API instead.
+ingressClass:
+  enabled: false
+
+# Enable Gateway API Provider & Disables the KubernetesIngress provider
+# Providers tell Traefik where to find routing configuration.
+providers:
+  kubernetesIngress:
+    enabled: false
+  kubernetesGateway:
+    enabled: true
+    # Used to enable TLSRoute and TCPRoute
+    experimentalChannel: true
+
+## Gateway Listeners
+gateway:
+  # Use cert-manager to issue cloudflare origin ca certificates and automatically
+  # renew them
+  # annotations:
+  #   cert-manager.io/issuer: cloudflare-issuer
+  #   cert-manager.io/private-key-algorithm: Ed25519
+  #   cert-manager.io/duration: 168h
+  #   cert-manager.io/renew-before: 24h
+
+  listeners:
+    web:           # HTTP listener that matches entryPoint `web`
+      port: 80
+      protocol: HTTP
+
+    websecure:         # HTTPS listener that matches entryPoint `websecure`
+      port: 443
+      protocol: HTTPS  # TLS terminates inside Traefik
+      mode: Terminate
+      certificateRefs:    
+        - kind: Secret
+          name: local-selfsigned-tls  # the Secret we created before the installation
+          group: ""
+        # - kind: Secret
+        #   name: cloudflare-origin-ca
+        #   namespace: saorpg-roller
+        #   group: ""
+      namespacePolicy:
+        from: All
+
+    postgres:
+      port: 5432
+      # protocol: TCP
+      protocol: TLS
+      mode: Passthrough
+      namespacePolicy:
+        from: All
+
+# Enable Observability
+logs:
+  general:
+    level: INFO
+  # This enables access logs, outputting them to Traefik's standard output by default. The [Access Logs Documentation](https://doc.traefik.io/traefik/observability/access-logs/) covers formatting, filtering, and output options.
+  access:
+    enabled: true
+
+# Enables Prometheus for Metrics
+metrics:
+  prometheus:
+    enabled: true

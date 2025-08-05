@@ -6,4 +6,4 @@ sqitch.conf
 node_modules
 
 # Prevent secret manager secrets from being leaked
-secret_manager_creds.yaml
+secrets.yaml
