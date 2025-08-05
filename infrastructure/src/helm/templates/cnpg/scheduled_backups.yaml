@@ -5,7 +5,7 @@ metadata:
   name: scheduled-pg-backup
 spec:
   cluster:
-    name: {{ include "saorpg-roller-db.fullname" . }}
+    name: {{ include "saorpg-roller.fullname" . }}
   schedule: '0 0 0 * * SUN'
   backupOwnerReference: self
   method: plugin
