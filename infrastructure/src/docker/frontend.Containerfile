@@ -1,4 +1,4 @@
-FROM node:22-bookworm as builder
+FROM node:22-bookworm AS builder
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN corepack enable pnpm && \
     pnpm build
 
 
-FROM node:22-bookworm as application
+FROM node:22-bookworm AS application
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
