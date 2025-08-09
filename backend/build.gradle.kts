@@ -29,3 +29,7 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.bootBuildImage {
+	imageName.set("sao-rpg.com/library/roller/backend:${project.version}")
+}
