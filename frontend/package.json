@@ -1,12 +1,13 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:image": "cross-var docker build -t saorpg.com/library/roller/frontend:$npm_package_version -f Containerfile ."
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
@@ -28,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-var": "^1.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "eslint-config-prettier": "^10.1.1",

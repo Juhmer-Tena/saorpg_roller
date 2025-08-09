@@ -1,0 +1,6 @@
+Containerfile
+.dockerignore
+node_modules
+.next
+!.next/static
+!.next/standalone

@@ -2,7 +2,7 @@ FROM node:22-bookworm AS builder
 
 WORKDIR /app
 
-COPY frontend .
+COPY . .
 
 RUN corepack enable pnpm && \
     pnpm install --frozen-lockfile && \
