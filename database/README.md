@@ -11,14 +11,11 @@ available for that). Instead this section what commands need to be run in order 
 database schema (which can then be subsequently be used as a base for other sqitch commands).
 
 1. Ensure that your current directory is `database/src/sqitch`
-2. Identify the database's container name (typically will be `db` for the devcontainer but may also
-    be `database` for the production environments)
-3. Run the following command: `sqitch deploy --db-host <database container name> --db-user saorpg`
+2. Run the following command: `sqitch deploy --db-host 127.0.0.1 --db-port 6543 --db-user saorpg`
 
-If the command fails mentioning that the `db-host` is invalid or the `saorpg` database or user does
-not exist, then the postgres initialization script failed. You may need to delete the
-directory/volume that backs the database and restart the container if the initialization script had
-a transient error.
+If the command fails mentioning that the `saorpg` database or user does not exist, then the postgres
+initialization script failed. You may need to delete the directory/volume that backs the database
+and restart the container if the initialization script had a transient error.
 
 ## Creating the Devcontainer
 
@@ -39,10 +36,9 @@ marked by angled brackets (i.e., `<>`).
 
 ## Running Tests
 
-Once the devcontainer is created, a terminal session to the database container can be opened and the
-following command should be executed:
+Once the devcontainer is created, the following command can be ran while in this directory:
 
-`pg_prove -U postgres -d postgres /usr/local/src/postgresql/test/*.sql`
+`pg_prove --dbname saorpg --username postgres --host 127.0.0.1 --port 6543 test/*.sql`
 
 After putting in the password generated in `.devcontainer/database/POSTGRES_PASSWORD` when prompted,
 the tests will execute and display the results.
