@@ -4,14 +4,10 @@ services:
   dev-machine:
     build:
       dockerfile: ./.devcontainer/development.Containerfile
-    security_opt:
-    - no-new-privileges:true
     command: sleep infinity
     volumes:
     - .:/workspace:rw,z,cached
-    networks:
-      - external
-      - internal
+    network_mode: host
     environment:
       API_SERVER_CONTAINER: dev-machine
       SQITCH_USER_CONFIG: /run/secrets/sqitch_config
@@ -23,6 +19,8 @@ services:
     build:
       dockerfile: ./.devcontainer/database.Containerfile
     restart: unless-stopped
+    ports:
+    - 6543:5432
     security_opt:
     - no-new-privileges:true
     volumes:
@@ -31,8 +29,6 @@ services:
     - ./database/configuration/postgresql.conf:/etc/postgresql/postgresql.conf:ro,Z
     - ./database:/usr/local/src/postgresql:ro,Z
     - ./database/src/shell:/docker-entrypoint-initdb.d:ro,Z
-    networks:
-    - internal
     command:
     - -c
     - config_file=/etc/postgresql/postgresql.conf
@@ -41,30 +37,9 @@ services:
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
 
-  proxy:
-    image: nginxinc/nginx-unprivileged
-    security_opt:
-    - no-new-privileges:true
-    environment:
-      API_SERVER_CONTAINER: dev-machine
-      FRONTEND_SERVER_CONTAINER: dev-machine
-    ports:
-      - 8080:8080
-    volumes:
-    - ./infrastructure/src/nginx/templates:/etc/nginx/templates:ro,Z
-    networks:
-      - external
-      - internal
-
 volumes:
   postgres-data:
     external: true
-
-networks:
-  # Internal network is added to secure database while using trust authentication
-  external:
-  internal:
-    internal: true
 
 secrets:
   sqitch_config:
