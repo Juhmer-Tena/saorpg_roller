@@ -12,6 +12,8 @@
       "installGradle": true,
       "gradleVersion": "8.12"
     },
-    "ghcr.io/devcontainers/features/node": {}
+    "ghcr.io/devcontainers/features/node": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
   }
 }
