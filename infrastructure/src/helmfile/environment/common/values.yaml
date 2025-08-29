@@ -2,3 +2,4 @@ namespace:
   externalSecrets: external-secrets
   saorpgRoller: saorpg-roller
   traefik: traefik
+  cnpg: cnpg-system

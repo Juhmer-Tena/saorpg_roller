@@ -23,7 +23,7 @@ repositories:
 
 releases:
 - name: cnpg
-  namespace: cnpg-system
+  namespace: "{{ .Values.namespace.cnpg }}"
   chart: cnpg/cloudnative-pg
 - name: cert-manager
   namespace: cert-manager
@@ -92,37 +92,26 @@ releases:
   - values/external-dns.yaml
   needs:
   - "{{ .Values.namespace.externalSecrets }}/shared-secrets"
-# - name: saorpg-roller
-#   namespace: "{{ .Values.namespace.saorpgRoller }}"
-#   chart: ../helm/saorpg-roller
-#   values:
-#   - values/saorpg-roller.yaml
-#   hooks:
-#   - events: [presync]
-#     showlogs: true
-#     command: kubectl
-#     args:
-#     - apply
-#     - -f
-#     - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
-#   - events: [postuninstall]
-#     showlogs: true
-#     command: kubectl
-#     args:
-#     - delete
-#     - -f
-#     - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
-#   - events: [presync]
-#     showlogs: true
-#     command: kubectl
-#     args:
-#     - apply
-#     - -f
-#     - "https://raw.githubusercontent.com/apache/apisix-ingress-controller/refs/heads/v2.0.0/examples/httpbin/deployment.yaml"
-#   - events: [postuninstall]
-#     showlogs: true
-#     command: kubectl
-#     args:
-#     - delete
-#     - -f
-#     - "https://raw.githubusercontent.com/apache/apisix-ingress-controller/refs/heads/v2.0.0/examples/httpbin/deployment.yaml"
+- name: saorpg-roller
+  namespace: "{{ .Values.namespace.saorpgRoller }}"
+  chart: ../helm/saorpg-roller
+  values:
+  - values/saorpg-roller.yaml
+  hooks:
+  - events: [presync]
+    showlogs: true
+    command: kubectl
+    args:
+    - apply
+    - -f
+    - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
+  - events: [postuninstall]
+    showlogs: true
+    command: kubectl
+    args:
+    - delete
+    - -f
+    - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
+  needs:
+  - "{{ .Values.namespace.traefik }}/traefik"
+  - "{{ .Values.namespace.cnpg }}/cnpg"
