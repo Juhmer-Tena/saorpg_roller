@@ -19,15 +19,13 @@ ports:
     port: 5432
     expose:
       default: true
-    # tls:
-    #   enabled: true
 
 # Enables the dashboard in Secure Mode
 api:
   dashboard: true
   insecure: false
 
-# Creates a BasiAuth Middleware and Secret for the Dashboard Security
+# Creates a BasicAuth Middleware and Secret for the Dashboard Security
 extraObjects:
   - apiVersion: v1
     kind: Secret
@@ -36,7 +34,7 @@ extraObjects:
     type: kubernetes.io/basic-auth
     stringData:
       username: admin
-      password: password # Set value when installing
+      password: {{ .Values.traefik.dashboard.password }}
   - apiVersion: traefik.io/v1alpha1
     kind: Middleware
     metadata:
@@ -54,7 +52,7 @@ extraObjects:
       - name: traefik-gateway
         sectionName: websecure
       hostnames:
-      - "traefik-dashboard.docker.localhost"
+      - "{{ .Values.traefik.dashboard.hostname }}"
       rules:
       - matches:
         # Using PathPrefix for /dashboard and /api paths breaks the dashboard for some reason...
@@ -88,14 +86,6 @@ providers:
 
 ## Gateway Listeners
 gateway:
-  # Use cert-manager to issue cloudflare origin ca certificates and automatically
-  # renew them
-  # annotations:
-  #   cert-manager.io/issuer: cloudflare-issuer
-  #   cert-manager.io/private-key-algorithm: Ed25519
-  #   cert-manager.io/duration: 168h
-  #   cert-manager.io/renew-before: 24h
-
   listeners:
     web:           # HTTP listener that matches entryPoint `web`
       port: 80
@@ -105,20 +95,13 @@ gateway:
       port: 443
       protocol: HTTPS  # TLS terminates inside Traefik
       mode: Terminate
-      certificateRefs:    
-        - kind: Secret
-          name: local-selfsigned-tls  # the Secret we created before the installation
-          group: ""
-        # - kind: Secret
-        #   name: cloudflare-origin-ca
-        #   namespace: saorpg-roller
-        #   group: ""
+      certificateRefs:
+      {{- .Values.traefik.gateway.listeners.websecure.certificateRefs | toYaml | nindent 6 }}
       namespacePolicy:
         from: All
 
     postgres:
       port: 5432
-      # protocol: TCP
       protocol: TLS
       mode: Passthrough
       namespacePolicy:

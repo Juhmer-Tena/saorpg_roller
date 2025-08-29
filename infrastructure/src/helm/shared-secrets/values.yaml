@@ -1,0 +1,45 @@
+# Default values for shared-secrets.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+awsSecretManager:
+  # region: <insert region here> i.e., us-west-1
+  # iamRoleARN: <insert role ARN here> i.e., arn:aws:iam::894865518514:role/saorpg-roller-aws-iam-role-s
+  # accessKeyId: <insert access key id here>
+  # secretAccessKey: <insert secret access key here>
+  secretKeys:
+    accessKeyId: access-key
+    secretAccessKey: secret-access-key
+
+# Any external secrets to create from the aws secret store
+externalSecrets: {}
+  # aws-s3-creds:
+  #   refreshInterval: 15m
+  #   target:
+  #     name: aws-s3-creds
+  #     creationPolicy: Owner
+  #   dataFrom:
+  #   - extract:
+  #       key: s3-access-key
+
+# Any push secrets to create for other namespaces in the same k8s cluster
+pushSecrets: {}
+  # saorpg-roller:
+  # - name: aws-s3-creds
+  #   spec:
+  #     # Can also be deletionPolicy and other specs not based on secret names
+  #     refreshInterval: 15m

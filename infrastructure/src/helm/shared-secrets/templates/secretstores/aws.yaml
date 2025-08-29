@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: {{ include "shared-secrets.awsSecretStoreName" . }}
+  labels:
+    {{- include "shared-secrets.labels" . | nindent 4 }}
+spec:
+  provider:
+    aws:
+      service: SecretsManager
+      region: {{ .Values.awsSecretManager.region }}
+      role: {{ .Values.awsSecretManager.iamRoleARN }}
+      auth:
+        secretRef:
+          accessKeyIDSecretRef:
+            name: {{ include "shared-secrets.awsSecretManagerCredName" . }}
+            key: {{ .Values.awsSecretManager.secretKeys.accessKeyId }}
+          secretAccessKeySecretRef:
+            name: {{ include "shared-secrets.awsSecretManagerCredName" .}}
+            key: {{ .Values.awsSecretManager.secretKeys.secretAccessKey }}

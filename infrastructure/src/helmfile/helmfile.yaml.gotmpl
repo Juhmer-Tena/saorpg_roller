@@ -1,0 +1,128 @@
+environments:
+  default:
+    values:
+    - environment/common/values.yaml
+    - environment/development/values.yaml
+    - environment/development/secrets.yaml
+  production:
+    values:
+    - environment/common/values.yaml
+    - environment/production/values.yaml
+---
+repositories:
+- name: cnpg
+  url: https://cloudnative-pg.github.io/charts
+- name: jetstack
+  url: https://charts.jetstack.io
+- name: external-secrets
+  url: https://charts.external-secrets.io
+- name: traefik
+  url: https://traefik.github.io/charts
+- name: external-dns
+  url: https://kubernetes-sigs.github.io/external-dns
+
+releases:
+- name: cnpg
+  namespace: cnpg-system
+  chart: cnpg/cloudnative-pg
+- name: cert-manager
+  namespace: cert-manager
+  chart: jetstack/cert-manager
+  values:
+  - values/cert-manager.yaml
+- name: external-secrets
+  namespace: "{{ .Values.namespace.externalSecrets }}"
+  chart: external-secrets/external-secrets
+  wait: true # Needed to ensure the shared-secrets work
+- name: shared-secrets
+  namespace: "{{ .Values.namespace.externalSecrets }}"
+  chart: ../helm/shared-secrets
+  values:
+  - values/shared-secrets.yaml.gotmpl
+  - environment/common/secrets.yaml
+  needs:
+  - external-secrets
+- name: traefik
+  namespace: {{ .Values.namespace.traefik }}
+  chart: traefik/traefik
+  values:
+  - values/traefik.yaml.gotmpl
+  hooks:
+  - events: [presync]
+    showlogs: true
+    command: kubectl
+    args:
+    - apply
+    - -f
+    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml"
+  - events: [postuninstall]
+    showlogs: true
+    command: kubectl
+    args:
+    - delete
+    - -f
+    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml"
+  {{- if ne .Environment.Name "production" }}
+  - events: [presync]
+    showlogs: true
+    command: kubectl
+    args:
+    - create
+    - secret
+    - tls
+    - {{ (index .Values.traefik.gateway.listeners.websecure.certificateRefs 0).name }}
+    - --cert=environment/development/tls.dev.crt
+    - --key=environment/development/tls.dev.key
+    - --namespace={{ .Values.namespace.traefik }}
+  - events: [postuninstall]
+    showlogs: true
+    command: kubectl
+    args:
+    - delete
+    - secret
+    - {{ (index .Values.traefik.gateway.listeners.websecure.certificateRefs 0).name }}
+    - --namespace={{ .Values.namespace.traefik }}
+  {{- end }}
+  needs:
+  - "{{ .Values.namespace.externalSecrets }}/shared-secrets"
+- name: external-dns
+  namespace: "{{ .Values.namespace.saorpgRoller }}"
+  chart: external-dns/external-dns
+  values:
+  - values/external-dns.yaml
+  needs:
+  - "{{ .Values.namespace.externalSecrets }}/shared-secrets"
+# - name: saorpg-roller
+#   namespace: "{{ .Values.namespace.saorpgRoller }}"
+#   chart: ../helm/saorpg-roller
+#   values:
+#   - values/saorpg-roller.yaml
+#   hooks:
+#   - events: [presync]
+#     showlogs: true
+#     command: kubectl
+#     args:
+#     - apply
+#     - -f
+#     - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
+#   - events: [postuninstall]
+#     showlogs: true
+#     command: kubectl
+#     args:
+#     - delete
+#     - -f
+#     - "https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.6.0/manifest.yaml"
+#   - events: [presync]
+#     showlogs: true
+#     command: kubectl
+#     args:
+#     - apply
+#     - -f
+#     - "https://raw.githubusercontent.com/apache/apisix-ingress-controller/refs/heads/v2.0.0/examples/httpbin/deployment.yaml"
+#   - events: [postuninstall]
+#     showlogs: true
+#     command: kubectl
+#     args:
+#     - delete
+#     - -f
+#     - "https://raw.githubusercontent.com/apache/apisix-ingress-controller/refs/heads/v2.0.0/examples/httpbin/deployment.yaml"

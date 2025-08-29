@@ -1,0 +1,10 @@
+traefik:
+  dashboard:
+    hostname: traefik-dashboard.docker.localhost
+  gateway:
+    listeners:
+      websecure:
+        certificateRefs:
+        - kind: Secret
+          name: local-selfsigned-tls
+          group: ""

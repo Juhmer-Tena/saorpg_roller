@@ -48,11 +48,3 @@ postgresqlConf:
 
 backup:
   enabled: true
-
-secretManager: {}
-  # Expected values:
-  # accessKeyId: string (not base64-encoded)
-  # secretAccessKey: string (not base64-encoded)
-
-cloudflare:
-  originCertName: cloudflare-origin-ca

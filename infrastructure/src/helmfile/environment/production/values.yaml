@@ -1,0 +1,10 @@
+traefik:
+  dashboard:
+    hostname: traefik-dashboard.juhmertena.com
+  gateway:
+    listeners:
+      websecure:
+        certificateRefs:
+        - kind: Secret
+          name: cloudflare-origin-ca-cert
+          group: ""
