@@ -8,3 +8,6 @@ traefik:
         - kind: Secret
           name: local-selfsigned-tls
           group: ""
+
+externalDns:
+  enabled: false

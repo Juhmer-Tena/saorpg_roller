@@ -27,6 +27,12 @@ api:
 
 # Creates a BasicAuth Middleware and Secret for the Dashboard Security
 extraObjects:
+  - apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: selfsigned-issuer
+    spec:
+      selfSigned: {}
   - apiVersion: v1
     kind: Secret
     metadata:
@@ -92,6 +98,7 @@ gateway:
       protocol: HTTP
 
     websecure:         # HTTPS listener that matches entryPoint `websecure`
+      hostname: traefik-dashboard.docker.localhost
       port: 443
       protocol: HTTPS  # TLS terminates inside Traefik
       mode: Terminate
@@ -107,6 +114,9 @@ gateway:
       namespacePolicy:
         from: All
 
+  annotations:
+    cert-manager.io/issuer: selfsigned-issuer
+
 # Enable Observability
 logs:
   general:
@@ -118,4 +128,8 @@ logs:
 # Enables Prometheus for Metrics
 metrics:
   prometheus:
+    enabled: true
+
+experimental:
+  kubernetesGateway:
     enabled: true

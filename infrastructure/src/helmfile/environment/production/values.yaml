@@ -8,3 +8,6 @@ traefik:
         - kind: Secret
           name: cloudflare-origin-ca-cert
           group: ""
+
+externalDns:
+  enabled: true
