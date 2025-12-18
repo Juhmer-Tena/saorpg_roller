@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "shared-secrets.awsSecretManagerCredName" . }}
-stringData:
-  {{ .Values.awsSecretManager.secretKeys.accessKeyId }}: {{ required "AWS SM Access Key ID required" .Values.awsSecretManager.accessKeyId }}
-  {{ .Values.awsSecretManager.secretKeys.secretAccessKey }}: {{ required "AWS SM Secret Access Key required" .Values.awsSecretManager.secretAccessKey }}
