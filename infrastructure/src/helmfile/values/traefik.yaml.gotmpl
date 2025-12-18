@@ -27,12 +27,32 @@ api:
 
 # Creates a BasicAuth Middleware and Secret for the Dashboard Security
 extraObjects:
+  {{- if eq .Values.traefik.certManager.issuer "self-signed" }}
   - apiVersion: cert-manager.io/v1
     kind: Issuer
     metadata:
       name: selfsigned-issuer
     spec:
       selfSigned: {}
+  {{- else }}
+  - apiVersion: cert-manager.k8s.cloudflare.com/v1
+    kind: OriginIssuer
+    metadata:
+      name: origin-ca-issuer
+    spec:
+      requestType: OriginECC
+      auth:
+        serviceKeyRef:
+          name: cfapi-token
+          key: key
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: cfapi-token
+    type: Opaque
+    stringData:
+      key: {{ required "Cloudflare token is required in a production environment" .Values.cloudflare.apiToken }}
+  {{- end }}
   - apiVersion: v1
     kind: Secret
     metadata:
@@ -117,7 +137,13 @@ gateway:
         from: All
 
   annotations:
+    {{- if eq .Values.traefik.certManager.issuer "self-signed" }}
     cert-manager.io/issuer: selfsigned-issuer
+    {{- else }}
+    cert-manager.io/issuer: origin-ca-issuer
+    cert-manager.io/issuer-kind: OriginIssuer
+    cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+    {{- end }}
 
 # Enable Observability
 logs:

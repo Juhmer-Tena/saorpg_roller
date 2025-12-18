@@ -2,6 +2,10 @@ traefik:
   wildcardHostname: "*.docker.localhost"
   hostnames:
     dashboard: traefik-dashboard.docker.localhost
+  certManager:
+    issuer: self-signed
+    originCAIssuer:
+      enabled: false
 
 externalDns:
   enabled: false

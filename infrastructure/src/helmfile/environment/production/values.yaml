@@ -2,6 +2,10 @@ traefik:
   wildcardHostname: "*.juhmertena.com"
   hostnames:
     dashboard: traefik-dashboard.juhmertena.com
+  certManager:
+    issuer: origin-ca
+    originCAIssuer:
+      enabled: true
 
 externalDns:
   enabled: true

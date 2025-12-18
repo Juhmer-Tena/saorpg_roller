@@ -23,6 +23,30 @@ releases:
   chart: jetstack/cert-manager
   values:
   - values/cert-manager.yaml
+- name: origin-ca-issuer
+  namespace: "{{ .Values.namespace.certManager }}"
+  chart: oci://ghcr.io/cloudflare/origin-ca-issuer-charts/origin-ca-issuer 
+  version: 0.5.10
+  condition: traefik.certManager.originCAIssuer.enabled
+  hooks:
+  - events: [presync]
+    showlogs: true
+    command: kubectl
+    args:
+    # Note: These links may need to change depending on 
+    - apply
+    - --server-side
+    - -f
+    - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.origin-ca-issuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
+  - events: [postuninstall]
+    showlogs: true
+    command: kubectl
+    args:
+    - delete
+    - -f
+    - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.origin-ca-issuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
+  needs:
+  - "{{ .Values.namespace.certManager }}/cert-manager"
 - name: traefik
   namespace: "{{ .Values.namespace.traefik }}"
   chart: traefik/traefik
@@ -46,7 +70,7 @@ releases:
     - -f
     - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml"
   needs:
-  - "{{ .Values.namespace.certManager }}/cert-manager"
+  - "{{ .Values.namespace.certManager }}/origin-ca-issuer"
 - name: external-dns
   namespace: "{{ .Values.namespace.saorpgRoller }}"
   chart: external-dns/external-dns
