@@ -58,7 +58,7 @@ extraObjects:
       - name: traefik-gateway
         sectionName: websecure
       hostnames:
-      - "{{ .Values.traefik.dashboard.hostname }}"
+      - "{{ .Values.traefik.hostnames.dashboard }}"
       rules:
       - matches:
         # Using PathPrefix for /dashboard and /api paths breaks the dashboard for some reason...
@@ -98,12 +98,14 @@ gateway:
       protocol: HTTP
 
     websecure:         # HTTPS listener that matches entryPoint `websecure`
-      hostname: traefik-dashboard.docker.localhost
+      hostname: "{{ .Values.traefik.wildcardHostname }}"
       port: 443
       protocol: HTTPS  # TLS terminates inside Traefik
       mode: Terminate
       certificateRefs:
-      {{- .Values.traefik.gateway.listeners.websecure.certificateRefs | toYaml | nindent 6 }}
+      - kind: Secret
+        name: gateway-certificate
+        group: ""
       namespacePolicy:
         from: All
 

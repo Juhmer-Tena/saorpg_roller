@@ -1,13 +1,7 @@
 traefik:
-  dashboard:
-    hostname: traefik-dashboard.juhmertena.com
-  gateway:
-    listeners:
-      websecure:
-        certificateRefs:
-        - kind: Secret
-          name: cloudflare-origin-ca-cert
-          group: ""
+  wildcardHostname: "*.juhmertena.com"
+  hostnames:
+    dashboard: traefik-dashboard.juhmertena.com
 
 externalDns:
   enabled: true
