@@ -15,11 +15,6 @@ ports:
   websecure:
     port: 443
 
-  postgres:
-    port: 5432
-    expose:
-      default: true
-
 # Enables the dashboard in Secure Mode
 api:
   dashboard: true
@@ -126,13 +121,6 @@ gateway:
       - kind: Secret
         name: gateway-certificate
         group: ""
-      namespacePolicy:
-        from: All
-
-    postgres:
-      port: 5432
-      protocol: TLS
-      mode: Passthrough
       namespacePolicy:
         from: All
 
