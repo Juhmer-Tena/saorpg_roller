@@ -10,8 +10,6 @@ environments:
     - environment/production/values.yaml
 ---
 repositories:
-- name: jetstack
-  url: https://charts.jetstack.io
 - name: traefik
   url: https://traefik.github.io/charts
 - name: external-dns
@@ -20,7 +18,8 @@ repositories:
 releases:
 - name: cert-manager
   namespace: "{{ .Values.namespace.certManager }}"
-  chart: jetstack/cert-manager
+  chart: oci://quay.io/jetstack/charts/cert-manager
+  version: v1.19.2
   values:
   - values/cert-manager.yaml
 - name: origin-ca-issuer
@@ -81,7 +80,12 @@ releases:
   namespace: "{{ .Values.namespace.saorpgRoller }}"
   chart: ../helm/saorpg-roller
   values:
-  - values/saorpg-roller.yaml
+  - values/saorpg-roller.yaml.gotmpl
   needs:
   - "{{ .Values.namespace.traefik }}/traefik"
-  installed: false
+- name: dev-database
+  namespace: "{{ .Values.namespace.developmentDatabase }}"
+  chart: ../helm/dev-database
+  condition: developmentDatabase.enabled
+  values:
+  - values/dev-database.yaml.gotmpl

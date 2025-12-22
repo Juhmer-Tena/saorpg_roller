@@ -9,3 +9,6 @@ traefik:
 
 externalDns:
   enabled: true
+
+developmentDatabase:
+  enabled: false

@@ -2,6 +2,7 @@ namespace:
   saorpgRoller: saorpg-roller
   traefik: traefik
   certManager: cert-manager
+  developmentDatabase: dev-database
 
 origin-ca-issuer:
   crds:

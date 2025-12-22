@@ -1,4 +1,0 @@
-storageClass: local-path
-secretManager:
-  accessKeyId: "{{ aws.sm.access_key_id }}"
-  secretAccessKey: "{{ aws.sm.secret_access_key }}"
