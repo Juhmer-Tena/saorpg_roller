@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:image": "cross-var docker build -t saorpg.com/library/roller/frontend:$npm_package_version -f Containerfile ."
+    "build:image": "cross-var docker build -t saorpg/saorpg-roller-frontend:$npm_package_version -f Containerfile ."
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",

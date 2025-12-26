@@ -31,5 +31,5 @@ tasks.withType<Test> {
 }
 
 tasks.bootBuildImage {
-	imageName.set("sao-rpg.com/library/roller/backend:${project.version}")
+	imageName.set("saorpg/saorpg-roller-backend:${project.version}")
 }
