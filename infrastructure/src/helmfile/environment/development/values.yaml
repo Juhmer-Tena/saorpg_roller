@@ -2,6 +2,7 @@ traefik:
   wildcardHostname: "*.docker.localhost"
   hostnames:
     dashboard: traefik-dashboard.docker.localhost
+    roller: saorpg-roller.docker.localhost
   certManager:
     issuer: self-signed
     originCAIssuer:
