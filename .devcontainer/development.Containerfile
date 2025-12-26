@@ -14,6 +14,6 @@ RUN UBUNTU_CODENAME=jammy && \
     && apt-get update && apt-get install --assume-yes \
     postgresql-client-17 \
     postgresql-17-pgtap \
-    && wget -q -O - https://github.com/helmfile/helmfile/releases/download/v1.1.4/helmfile_1.1.4_linux_amd64.tar.gz | tar -C /usr/local/bin -zxvf - helmfile \
+    && wget -q -O - https://github.com/helmfile/helmfile/releases/download/v1.2.3/helmfile_1.2.3_linux_amd64.tar.gz | tar -C /usr/local/bin -zxvf - helmfile \
     && rm -rf /var/lib/apt/lists/* \
     && sqitch config --user engine.pg.client /usr/bin/psql
