@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saorpg-roller-frontend
+  labels:
+    app: saorpg-roller-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saorpg-roller-frontend
+  template:
+    metadata:
+      labels: 
+        app: saorpg-roller-frontend
+    spec:
+      containers:
+        - name: saorpg-roller-frontend
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          ports:
+            - name: http-webapp
+              containerPort: 3000
+          env:
+          - name: API_SERVER_CONTAINER
+            value: "saorpg-roller-backend.{{ .Release.Namespace }}.svc.cluster.local"

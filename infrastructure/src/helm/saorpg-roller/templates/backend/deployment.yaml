@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saorpg-roller-backend
+  labels:
+    app: saorpg-roller-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saorpg-roller-backend
+  template:
+    metadata:
+      labels: 
+        app: saorpg-roller-backend
+    spec:
+      containers:
+        - name: saorpg-roller-backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          ports:
+            - containerPort: 8080
+              name: http-api
+          env:
+          - name: DATABASE_JDBC_URI
+            valueFrom:
+              secretKeyRef:
+                name: saorpg-roller-secrets
+                key: jdbcUri
+      initContainers:
+      - name: sqitch-db-migration
+        image: "{{ .Values.sqitch.image.repository }}:{{ .Values.sqitch.image.tag }}"
+        # Needed so that the sqitch container can use the DATABASE_URI Secret
+        command: ["/bin/sh"]
+        args: ["-c", "sqitch deploy --target ${DATABASE_URI}"]
+        env:
+          - name: DATABASE_URI
+            valueFrom:
+              secretKeyRef:
+                name: saorpg-roller-secrets
+                key: database-uri
