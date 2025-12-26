@@ -49,25 +49,27 @@ releases:
 - name: traefik
   namespace: "{{ .Values.namespace.traefik }}"
   chart: traefik/traefik
+  version: v38.0.1
   values:
   - values/traefik.yaml.gotmpl
   hooks:
-  - events: [presync]
+  - events: [postsync]
     showlogs: true
     command: kubectl
     args:
-    # Note: These links may need to change depending on 
+    # Note: These links may need to change depending on the version that is required by traefik
     - apply
     - --server-side
+    - --force-conflicts
     - -f
-    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml"
+    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml"
   - events: [postuninstall]
     showlogs: true
     command: kubectl
     args:
     - delete
     - -f
-    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml"
+    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml"
   needs:
   - "{{ .Values.namespace.certManager }}/origin-ca-issuer"
 - name: external-dns
