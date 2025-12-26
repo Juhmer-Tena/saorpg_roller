@@ -72,7 +72,7 @@ export function RollerForm() {
               // handwritten, but it should cover most cases. This validation is really only for UX
               // and the backend performs validation as well.
               pattern: {
-                value: /^https:\/\/(.*\.)?sao-rpg\.com(\/\.*)*$/,
+                value: /^https:\/\/(.*\.)?sao-rpg\.com(\/.*)*$/,
                 message: "URL must be to a page on SAO-RPG",
               },
             })}
