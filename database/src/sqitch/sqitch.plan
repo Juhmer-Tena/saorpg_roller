@@ -6,3 +6,5 @@ appschema 2024-12-03T09:32:38Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.g
 rolls [appschema] 2025-03-06T09:39:39Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.github.com> # Creates table to track rolls.
 character_index [rolls] 2025-03-06T10:05:16Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.github.com> # Creates an index on the character to allow faster queries on user.
 @v1.0.0-alpha 2025-03-06T10:37:35Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.github.com> # Tag v1.0.0-alpha
+
+add_roll_parameter_length_constraint [rolls appschema] 2025-12-27T10:48:50Z Juhmer Tena <48825479+Juhmer-Tena@users.noreply.github.com> # Adds constraints to certain user-controlled columns in the rolls table.
