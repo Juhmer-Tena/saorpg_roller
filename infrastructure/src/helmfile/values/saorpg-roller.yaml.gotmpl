@@ -1,3 +1,3 @@
 postgres:
-  uri: "postgresql://{{ .Values.postgres.user }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:5432/{{ .Values.postgres.database }}"
-  jdbcUri: "jdbc:postgresql://{{ .Values.postgres.host }}:5432/{{ .Values.postgres.database }}?user={{ .Values.postgres.user }}&password={{ .Values.postgres.password }}"
+  uri: "postgresql://{{ .Values.postgres.user }}:{{ .Values.postgres.password }}@{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}{{ .Values.postgres.extraParamsUri }}"
+  jdbcUri: "jdbc:postgresql://{{ .Values.postgres.host }}:{{ .Values.postgres.port }}/{{ .Values.postgres.database }}?user={{ .Values.postgres.user }}&password={{ .Values.postgres.password }}{{ .Values.postgres.extraParamsJdbcUri }}"
