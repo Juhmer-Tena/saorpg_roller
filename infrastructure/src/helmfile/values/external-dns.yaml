@@ -4,8 +4,7 @@ env:
 - name: CF_API_TOKEN
   valueFrom:
     secretKeyRef:
-      name: cloudflare-dns-creds
+      name: external-dns
       key: CF_API_TOKEN
 sources:
-- gateway-tlsroute
 - gateway-httproute
