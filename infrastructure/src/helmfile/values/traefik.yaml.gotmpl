@@ -3,7 +3,7 @@
 ports:
   # Defines the HTTP entry point named 'web'
   web:
-    port: 80
+    port: 8000
     # Instructs this entry point to redirect all traffic to the 'websecure' entry point
     redirections:
       entryPoint:
@@ -13,7 +13,7 @@ ports:
 
   # Defines the HTTPS entry point named 'websecure'
   websecure:
-    port: 443
+    port: 8443
 
 # Enables the dashboard in Secure Mode
 api:
@@ -37,7 +37,7 @@ extraObjects:
     spec:
       requestType: OriginECC
       auth:
-        serviceKeyRef:
+        tokenRef:
           name: cfapi-token
           key: key
   - apiVersion: v1
@@ -46,7 +46,7 @@ extraObjects:
       name: cfapi-token
     type: Opaque
     stringData:
-      key: {{ required "Cloudflare token is required in a production environment" .Values.cloudflare.apiToken }}
+      key: {{ required "Cloudflare token is required in a production environment" .Values.cloudflare.apiTokens.tlsCertificates }}
   {{- end }}
   - apiVersion: v1
     kind: Secret
@@ -102,19 +102,17 @@ providers:
     enabled: false
   kubernetesGateway:
     enabled: true
-    # Used to enable TLSRoute and TCPRoute
-    experimentalChannel: true
 
 ## Gateway Listeners
 gateway:
   listeners:
     web:           # HTTP listener that matches entryPoint `web`
-      port: 80
+      port: 8000
       protocol: HTTP
 
     websecure:         # HTTPS listener that matches entryPoint `websecure`
       hostname: "{{ .Values.traefik.wildcardHostname }}"
-      port: 443
+      port: 8443
       protocol: HTTPS  # TLS terminates inside Traefik
       mode: Terminate
       certificateRefs:
@@ -144,8 +142,4 @@ logs:
 # Enables Prometheus for Metrics
 metrics:
   prometheus:
-    enabled: true
-
-experimental:
-  kubernetesGateway:
     enabled: true
