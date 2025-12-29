@@ -29,3 +29,10 @@ Create chart name and version as used by the chart label.
 {{- define "saorpg-roller.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Create image name to be used in the helm charts
+*/}}
+{{- define "saorpg-roller.image-name" -}}
+{{- printf "%s/%s:%s" .Values.images.registry .Image.repository .Image.tag  }}
+{{- end }}

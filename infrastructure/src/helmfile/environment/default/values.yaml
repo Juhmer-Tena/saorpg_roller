@@ -13,3 +13,16 @@ externalDns:
 
 developmentDatabase:
   enabled: true
+
+images:
+  # Pretty much the local reigistry
+  registry: docker.io
+  backend:
+    repository: saorpg/saorpg-roller-backend
+    tag: 0.0.2-SNAPSHOT
+  frontend:
+    repository: saorpg/saorpg-roller-frontend
+    tag: 0.0.1
+  sqitch:
+    repository: saorpg/saorpg-roller-sqitch
+    tag: 0.0.1

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: saorpg-roller-backend
-          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          image: {{ include "saorpg-roller.image-name" (dict "Values" .Values "Image" .Values.images.backend) }}
           ports:
             - containerPort: 8080
               name: http-api
@@ -28,7 +28,7 @@ spec:
                 key: jdbcUri
       initContainers:
       - name: sqitch-db-migration
-        image: "{{ .Values.sqitch.image.repository }}:{{ .Values.sqitch.image.tag }}"
+        image: {{ include "saorpg-roller.image-name" (dict "Values" .Values "Image" .Values.images.sqitch) }}
         # Needed so that the sqitch container can use the DATABASE_URI Secret
         command: ["/bin/sh"]
         args: ["-c", "sqitch deploy --target ${DATABASE_URI}"]

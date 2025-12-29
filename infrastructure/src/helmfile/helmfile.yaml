@@ -2,8 +2,8 @@ environments:
   default:
     values:
     - environment/common/values.yaml
-    - environment/development/values.yaml
-    - environment/development/secrets.yaml
+    - environment/default/values.yaml
+    - environment/default/secrets.yaml
   production:
     values:
     - environment/common/values.yaml
@@ -82,6 +82,8 @@ releases:
   namespace: "{{ .Values.namespace.saorpgRoller }}"
   chart: ../helm/saorpg-roller
   values:
+  - environment/common/values.yaml
+  - environment/{{ .Environment.Name }}/values.yaml
   - values/saorpg-roller.yaml.gotmpl
   needs:
   - "{{ .Values.namespace.traefik }}/traefik"

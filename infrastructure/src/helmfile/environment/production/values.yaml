@@ -13,3 +13,15 @@ externalDns:
 
 developmentDatabase:
   enabled: false
+
+images:
+  registry: registry.digitalocean.com/saorpg-roller-registry
+  backend:
+    repository: saorpg-roller-backend
+    tag: 1.0.0-alpha.1
+  frontend:
+    repository: saorpg-roller-frontend
+    tag: 1.0.0-alpha.1
+  sqitch:
+    repository: saorpg-roller-sqitch
+    tag: 1.0.0-alpha.1

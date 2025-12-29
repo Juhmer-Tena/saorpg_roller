@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: saorpg-roller-frontend
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          {{- $data := dict "Values" .Values "Image" .Values.images.frontend }}
+          image: {{ include "saorpg-roller.image-name" $data | quote }}
           ports:
             - name: http-webapp
               containerPort: 3000
