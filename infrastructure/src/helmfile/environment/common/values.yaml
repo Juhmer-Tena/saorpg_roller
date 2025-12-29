@@ -4,6 +4,6 @@ namespace:
   certManager: cert-manager
   developmentDatabase: dev-database
 
-origin-ca-issuer:
+originCaIssuer:
   crds:
     version: v0.13.0
