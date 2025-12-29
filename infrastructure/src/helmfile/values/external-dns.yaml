@@ -8,3 +8,5 @@ env:
       key: CF_API_TOKEN
 sources:
 - gateway-httproute
+extraArgs:
+- --cloudflare-proxied 
