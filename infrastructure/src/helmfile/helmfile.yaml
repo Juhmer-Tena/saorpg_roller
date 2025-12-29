@@ -27,54 +27,37 @@ releases:
   chart: oci://ghcr.io/cloudflare/origin-ca-issuer-charts/origin-ca-issuer 
   version: 0.5.10
   condition: traefik.certManager.originCAIssuer.enabled
-  hooks:
-  - events: [presync]
-    showlogs: true
-    command: kubectl
-    args:
-    # Note: These links may need to change depending on 
-    - apply
-    - --server-side
-    - -f
-    - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.origin-ca-issuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
-  - events: [postuninstall]
-    showlogs: true
-    command: kubectl
-    args:
-    - delete
-    - -f
-    - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.origin-ca-issuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
+  # hooks:
+  # - events: [presync]
+  #   showlogs: true
+  #   command: kubectl
+  #   args:
+  #   # Note: These links may need to change depending on 
+  #   - apply
+  #   - --server-side
+  #   - -f
+  #   - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.originCaIssuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
+  # - events: [postuninstall]
+  #   showlogs: true
+  #   command: kubectl
+  #   args:
+  #   - delete
+  #   - -f
+  #   - "https://raw.githubusercontent.com/cloudflare/origin-ca-issuer/{{ .Values.originCaIssuer.crds.version }}/deploy/crds/cert-manager.k8s.cloudflare.com_originissuers.yaml"
   needs:
   - "{{ .Values.namespace.certManager }}/cert-manager"
 - name: traefik
   namespace: "{{ .Values.namespace.traefik }}"
   chart: traefik/traefik
-  version: v38.0.1
+  version: 38.0.1
   values:
   - values/traefik.yaml.gotmpl
-  hooks:
-  - events: [postsync]
-    showlogs: true
-    command: kubectl
-    args:
-    # Note: These links may need to change depending on the version that is required by traefik
-    - apply
-    - --server-side
-    - --force-conflicts
-    - -f
-    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml"
-  - events: [postuninstall]
-    showlogs: true
-    command: kubectl
-    args:
-    - delete
-    - -f
-    - "https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml"
   needs:
   - "{{ .Values.namespace.certManager }}/origin-ca-issuer"
 - name: external-dns
   namespace: "{{ .Values.namespace.saorpgRoller }}"
   chart: external-dns/external-dns
+  version: 1.19.0
   condition: externalDns.enabled
   values:
   - values/external-dns.yaml
