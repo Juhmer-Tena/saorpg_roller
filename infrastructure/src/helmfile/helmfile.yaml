@@ -8,6 +8,7 @@ environments:
     values:
     - environment/common/values.yaml
     - environment/production/values.yaml
+    - environment/production/secrets.yaml
 ---
 repositories:
 - name: traefik
